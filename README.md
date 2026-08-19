@@ -13,32 +13,48 @@ license: mit
 
 # FeatureLens
 
-FeatureLens is a causal interpretability workbench for `Qwen/Qwen3-1.7B-Base` and the **Qwen-Scope residual-stream sparse autoencoders**. It is built around one question:
+FeatureLens is a causal interpretability workbench for `Qwen/Qwen3-1.7B-Base` and **Qwen-Scope residual-stream sparse autoencoders**. It asks one question:
 
 > **Do sparse features that predict a concept also causally influence model behaviour?**
 
-The project keeps association and intervention evidence separate. A large SAE activation or strong held-out classifier is useful evidence about representation; a causal claim requires changing the residual stream and measuring downstream behaviour against controlled perturbations.
+The project separates representational evidence from causal evidence. A feature can classify a concept well without controlling the downstream continuation one might infer from that association.
 
-## What the live app does
+## Measured study result
 
-FeatureLens loads SAEs for residual layers **4, 14, and 26** and supports:
+The committed offline study uses **224 discovery prompts** (112 paraphrase pairs across seven controlled concepts) and **28 causal tasks**.
 
-- token-level residual capture and TopK SAE feature inspection;
-- reconstruction cosine, NMSE, activation mass, and layer trajectories;
+- Selected SAE features averaged **0.962 held-out AUROC** (median **0.987**, bootstrap 95% CI **[0.927, 0.994]**).
+- Dense final-token residual probes reached **1.000 macro AUROC** at layers 14 and 26.
+- Paraphrases preserved weighted sparse representations much more strongly than exact sparse support: mean cosine **0.985** versus TopK Jaccard **0.326**.
+- Selected features were active at the conventional final prompt token on only **28.6%** of causal tasks, but somewhere in the prompt on **82.1%**.
+- At the final token, targeted SAE interventions were **1.52×** the norm-matched random-control effect on average, but task-level uncertainty included zero (paired advantage **+0.0026**, 95% CI **[-0.0005, +0.0063]**, sign-flip **p=0.1719**).
+- When intervention positions were chosen only from the selected feature's **maximum SAE activation within the prompt**, coverage rose to **82.1%** and targeted effects averaged **2.33×** matched-random controls (paired advantage **+0.0237**, 95% CI **[+0.0067, +0.0469]**, sign-flip **p≈1×10⁻⁴**).
+- Final-token top-5 joint ablation produced only a **1.09×** SAE/random ratio, so adding more associated features did not automatically yield stronger causal specificity.
+- Across the seven concepts, held-out AUROC and max-active target specificity had only weak descriptive association (**Spearman ρ=-0.185**).
+
+The main conclusion is therefore not that predictive SAE features are automatically causal. **Causal evidence depended strongly on where the representation was tested**, and predictive strength by itself was a poor proxy for random-normalized causal specificity across concepts.
+
+See [`artifacts/report.md`](artifacts/report.md) and the **Study** tab for the full measured result.
+
+## Live workbench
+
+FeatureLens loads Qwen-Scope SAEs for residual layers **4, 14, and 26** and supports:
+
+- token-level residual capture and TopK feature inspection;
+- SAE reconstruction diagnostics and layer trajectories;
 - single-feature ablation, scaling, and decoder-direction injection;
 - exact full-continuation teacher-forced scoring;
 - next-token distribution shifts and deterministic generation comparison;
 - eight norm-matched random controls for live specificity checks;
-- scale dose-response curves;
-- contrastive continuation preference;
-- joint feature-set interventions, 1/3/5 set-size sweeps, non-additivity, and decoder geometry;
+- scale dose-response and contrastive continuation preference;
+- joint feature-set interventions, set-size sweeps, non-additivity, and decoder geometry;
 - concept-guided candidate discovery with current-token causal readiness;
-- batched candidate triage and random-controlled candidate comparison;
-- token traces, completion-cue tests, cue × context tests, and controlled concept contrasts;
+- batched candidate triage and controlled multi-candidate comparison;
+- completion-cue, cue × context, token-trace, and controlled-concept diagnostics;
 - local and prompt-wide paraphrase robustness;
 - cross-target causal profiles and pairwise preference shifts.
 
-The interface is deliberately an analytical tool rather than an SAE label viewer. Feature ids remain unlabeled until there is empirical evidence for a concept association.
+Feature ids remain unlabeled unless there is empirical evidence for a concept association.
 
 ## Intervention semantics
 
@@ -50,54 +66,52 @@ scale:   h' = h + (α - 1) z_i d_i
 inject:  h' = h + δ d_i
 ```
 
-FeatureLens applies the decoded **delta** to the original residual. It does not replace the residual with the full SAE reconstruction, so reconstruction error is not silently mixed into the intervention.
+FeatureLens applies the decoded **delta** to the original residual instead of replacing the residual with the full SAE reconstruction. Batched causal experiments include a zero-edit condition in the same execution context, and random controls match the L2 norm of the targeted SAE perturbation.
 
-Batched causal experiments include a zero-edit condition in the same execution context. Random controls match the L2 norm of the SAE perturbation.
+## Offline study design
 
-## Offline study
+Concept evidence uses **prompt-wide maximum SAE activation across non-padding tokens**. Final-token sparse activations are saved separately for local analyses.
 
-The live app is exploratory. The offline study is the dataset-scale experiment.
+Causal evidence is reported under two position policies:
 
-It uses **224 discovery prompts** arranged as 112 paraphrase pairs across seven controlled concepts, plus **28 separate causal tasks**. Concept evidence uses prompt-wide max-pooled SAE activations across non-padding tokens; final-token sparse activations are saved separately for local analyses.
+- **final token** — conventional final-prompt-token baseline;
+- **max feature activation** — intervene where the selected feature is most strongly represented in that prompt.
 
-Causal evidence is reported under two position policies: the original **final-token** baseline and **max-feature-activation**, which patches the selected feature where it is most strongly represented in the prompt. Max-active positions are selected from SAE activation only, never from downstream behavioral effects. Primary uncertainty uses the causal task as the statistical unit.
+Max-active positions are selected from SAE activation only, never from behavioral outcomes. Coverage is reported separately from effect strength.
 
-The study produces:
+The primary causal statistical unit is the **causal task**: ablation and 2× amplification are averaged within task before paired bootstrap and sign-flip inference.
+
+The study additionally includes:
 
 - train-only feature selection with held-out AUROC/F1;
-- a dense final-token residual linear-probe baseline;
-- paraphrase stability;
+- dense final-token residual linear-probe baselines;
+- paraphrase robustness;
 - 128-resample candidate-selection sensitivity;
-- random-controlled single-feature causal results under both final-token and max-feature-activation patch policies;
-- top-1/3/5 feature-set causal results;
-- causal-position coverage/sensitivity and cross-concept association-versus-causality synthesis;
-- uncertainty-aware report figures and a measured Markdown report.
+- top-1/3/5 feature-set causal diagnostics;
+- norm-matched random residual controls;
+- cross-concept association-versus-causality synthesis.
 
-Run the full pipeline with:
+## Reproducing the study
+
+The canonical command is:
 
 ```bash
 python -m experiments.run_all --resume
 ```
 
-On a memory-constrained GPU, activation collection can be tuned without changing the experiment definition:
+On a 16 GB GPU, a smaller activation batch is usually more comfortable:
 
 ```bash
 python -m experiments.run_all --resume --activation-batch-size 8
 ```
 
-If you already completed the v0.15 study, upgrade it with only the positional causal addendum:
-
-```bash
-python -m experiments.run_causal_addendum --resume
-```
-
-After the expensive model stages exist, CPU-only analysis can be regenerated with:
+After the expensive model stages exist, regenerate only CPU analysis with:
 
 ```bash
 python -m experiments.run_analysis_only
 ```
 
-Artifact integrity is checked with:
+Validate the final artifact bundle with:
 
 ```bash
 python -m scripts.validate_artifacts
@@ -105,13 +119,15 @@ python -m scripts.validate_artifacts
 
 ### Google Colab
 
-A ready-to-run full-study notebook is included at [`notebooks/FeatureLens_Offline_Study_Colab.ipynb`](notebooks/FeatureLens_Offline_Study_Colab.ipynb). If the v0.15 study is already complete, use [`notebooks/FeatureLens_Causal_Addendum_Colab.ipynb`](notebooks/FeatureLens_Causal_Addendum_Colab.ipynb) instead; it runs only the max-active causal addendum and CPU synthesis.
+Use [`notebooks/FeatureLens_Offline_Study_Colab.ipynb`](notebooks/FeatureLens_Offline_Study_Colab.ipynb) for a fresh full reproduction.
 
-See [`docs/COLAB.md`](docs/COLAB.md) for the exact workflow.
+[`notebooks/FeatureLens_Causal_Addendum_Colab.ipynb`](notebooks/FeatureLens_Causal_Addendum_Colab.ipynb) is retained as the exact migration path used to extend an already-completed final-token baseline with the max-active causal study without recollecting discovery activations.
+
+See [`notebooks/README.md`](notebooks/README.md) and [`docs/COLAB.md`](docs/COLAB.md).
 
 ## Public artifacts
 
-Large activation caches are intentionally excluded from Git. The small measured outputs that can be committed after a real run include:
+The repository commits only small measured outputs. Large activation caches and model/SAE weights are excluded.
 
 ```text
 artifacts/
@@ -127,29 +143,30 @@ artifacts/
 ├── study_summary.json
 ├── summary.json
 ├── report.md
+├── split.json
 └── figures/
 ```
 
-The **Study** tab reads these artifacts directly. Before the offline run is materialized it intentionally shows no placeholder metrics.
+The **Study** tab reads these artifacts directly and does not rerun the model.
 
 ## Repository layout
 
 ```text
 FeatureLens/
-├── app.py                    # Gradio / ZeroGPU workbench
-├── featurelens/              # SAE, runtime, metrics, interventions, study loader
-├── experiments/              # offline collection, evaluation, causal study, reports
-├── data/                     # controlled prompt and causal-task definitions
-├── artifacts/                # small public study outputs; activations are ignored
-├── notebooks/                # Colab runner
-├── scripts/                  # release, UI smoke, artifact validation
-├── tests/                    # software and methodology regression tests
-├── docs/                     # methodology, validation, deployment, Colab notes
-├── DESIGN.md                 # UI design contract
-└── research_config.json      # experiment configuration
+├── app.py
+├── featurelens/          # SAE/runtime/intervention/study code
+├── experiments/          # offline collection, causal study, analysis, reports
+├── data/                 # controlled discovery prompts and causal tasks
+├── artifacts/            # committed measured study outputs
+├── notebooks/            # Colab study runners
+├── scripts/              # validation and UI smoke checks
+├── tests/
+├── docs/
+├── DESIGN.md
+└── research_config.json
 ```
 
-## Local validation
+## Validation
 
 ```bash
 python3 -m pytest -q
@@ -157,36 +174,25 @@ python3 -m compileall -q app.py featurelens experiments scripts
 python3 -m ruff check app.py featurelens experiments tests scripts
 python3 scripts/ui_smoke.py
 python3 scripts/release_check.py
+python3 -m scripts.validate_artifacts
 ```
 
-The UI smoke test performs a real local Gradio `launch()` rather than only constructing the component tree.
+The UI smoke test performs a real local Gradio `launch()`.
 
-## Methodology notes
+## Interpretation guardrails
 
-Several quantities answer different questions and should not be collapsed into one score:
-
-- **held-out AUROC/F1** — concept association;
-- **paraphrase / resample stability** — sensitivity to wording or sample choice;
-- **target Δ log p** — effect on one specified continuation;
-- **Jensen-Shannon divergence** — local distributional change;
-- **random-normalized specificity** — whether the targeted SAE edit exceeds an equal-norm residual perturbation baseline;
-- **feature-set non-additivity** — downstream interaction under joint edits;
-- **decoder geometry** — alignment/cancellation before downstream model non-linearity.
-
-The full methodology is documented in [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md) and the offline study protocol in [`docs/OFFLINE_STUDY.md`](docs/OFFLINE_STUDY.md).
-
-## Limitations
-
-- Live ZeroGPU controls are intentionally small; eight-control empirical tails are coarse diagnostics.
-- SAE feature ids are layer-specific and should not be compared across layers by id.
+- Held-out AUROC/F1 measure **concept association**, not causal influence.
+- Max-active intervention positions are selected from SAE activation only, never from behavioral effect size.
+- Cross-concept correlations use only seven concepts and are descriptive.
+- Per-concept causal task counts are small; the primary inference pools task-level paired effects across all 28 causal tasks.
+- Five causal tasks contained no activation of the selected feature anywhere in the prompt; max-active coverage was therefore 82.1%, not 100%.
+- Dense linear probes and prompt-wide SAE features use different pooling schemes and are separate baselines.
 - Prompt-wide max pooling discards token order.
-- Dense linear probes and prompt-wide SAE features use different pooling schemes and are reported as separate baselines.
-- Cross-concept study correlations have only seven concepts and are descriptive.
-- A candidate feature can be predictive without being causally specific, and a causally disruptive feature need not selectively control the target one might infer from its association.
+- Live eight-control empirical tails are coarse diagnostics; the offline study is the primary aggregate evidence.
 
 ## Design
 
-The public UI follows the project-specific design contract in [`DESIGN.md`](DESIGN.md): restrained typography and color, flat information hierarchy, minimal decorative chrome, compact actions, explicit table headings, and no marketing-style cards/badges/gradients.
+The public UI follows [`DESIGN.md`](DESIGN.md): restrained typography and color, flat information hierarchy, compact actions, explicit result headings, and minimal decorative chrome.
 
 ## License
 

@@ -1,0 +1,59 @@
+{
+  "n_concepts": 7,
+  "selected_feature_pooling": "prompt-wide max SAE activation across non-padding prompt tokens",
+  "dense_probe_pooling": "final prompt token residual",
+  "primary_causal_position_policy": "max_feature_activation",
+  "causal_statistical_unit": "causal task; ablation and amplification are averaged within task before paired inference",
+  "median_selected_feature_resample_support": 1.0,
+  "final_token_feature_coverage": 0.2857142857142857,
+  "max_active_feature_coverage": 0.8214285714285714,
+  "final_token_target_specificity_ratio": 1.5178361142081527,
+  "max_active_target_specificity_ratio": 2.3344608571122225,
+  "final_token_target_paired_advantage": 0.002584017114713789,
+  "max_active_target_paired_advantage": 0.023669610804063268,
+  "final_token_target_paired_ci_95": [
+    -0.0005554523851190289,
+    0.006223834152167133
+  ],
+  "max_active_target_paired_ci_95": [
+    0.006155622166625111,
+    0.04787022493006328
+  ],
+  "final_token_target_sign_flip_pvalue": 0.171875,
+  "max_active_target_sign_flip_pvalue": 9.99950002499875e-05,
+  "most_predictive_concept": {
+    "concept": "german_language",
+    "heldout_auroc": 1.0
+  },
+  "highest_max_active_target_specificity": {
+    "concept": "uncertainty",
+    "ratio": 5.5052321815575915
+  },
+  "highest_max_active_js_specificity": {
+    "concept": "uncertainty",
+    "ratio": 6.015626813896881
+  },
+  "correlations": {
+    "heldout_auroc_vs_max_active_target_specificity": {
+      "rho": -0.18531232916527532,
+      "pvalue": 0.6907777961916857,
+      "n": 7
+    },
+    "heldout_auroc_vs_max_active_js_specificity": {
+      "rho": -0.14824986333222023,
+      "pvalue": 0.7510797526579065,
+      "n": 7
+    },
+    "heldout_f1_vs_max_active_target_specificity": {
+      "rho": 0.21821789023599242,
+      "pvalue": 0.638298871640929,
+      "n": 7
+    },
+    "candidate_resample_support_vs_max_active_target_specificity": {
+      "rho": NaN,
+      "pvalue": NaN,
+      "n": 7
+    }
+  },
+  "guardrail": "Max-active causal positions are selected from SAE activation only, never from behavioral outcome. Cross-concept Spearman correlations are descriptive because the study contains seven concepts."
+}

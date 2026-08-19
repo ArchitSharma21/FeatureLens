@@ -59,10 +59,8 @@ class OfflineStudy:
                 '### Offline study not materialized yet\n\n'
                 'The live workbench is usable now, but the finalized position-sensitivity study artifacts '
                 f'have not been committed. Missing: {missing}{suffix}\n\n'
-                'For a fresh study run `python -m experiments.run_all --resume`. If the v0.15 final-token '
-                'study already exists, use the v0.16 causal-addendum notebook or '
-                '`python -m experiments.run_causal_addendum --resume` to add max-active causal results '
-                'without recollecting discovery activations.'
+                'Run `python -m experiments.run_all --resume` or use the full-study Colab notebook '
+                'to materialize the measured study artifacts.'
             )
 
         summary = self._json('summary.json')

@@ -1,0 +1,176 @@
+{
+  "headline": "Selected SAE features averaged 0.962 held-out AUROC. Max-active interventions covered 82.1% of causal tasks and changed mean log p/token by 0.041 in absolute value on average versus 0.018 for norm-matched random controls (2.33\u00d7).",
+  "highlights": [
+    "Median selected-feature held-out AUROC: 0.987; mean AUROC 95% bootstrap CI [0.927, 0.994].",
+    "Best residual linear-probe layer: 14 with macro AUROC 1.000.",
+    "Mean paraphrase TopK Jaccard: 0.326; sparse activation cosine: 0.985.",
+    "Feature coverage: final-token policy 28.6%; active anywhere in prompt 82.1%; max-active intervention 82.1%.",
+    "Final-token task-level SAE/random ratio: 1.52\u00d7; paired advantage +0.0026, 95% CI [-0.0005, +0.0063], sign-flip p=0.1719.",
+    "Max-active task-level SAE/random ratio: 2.33\u00d7; paired advantage +0.0237, 95% CI [+0.0067, +0.0469], sign-flip p=0.0001.",
+    "Conditional on feature-active tasks, max-active SAE/random ratio: 2.33\u00d7 (n=23).",
+    "Final-token top-5 joint ablation SAE/random ratio: 1.09\u00d7; paired advantage +0.0009, 95% CI [-0.0035, +0.0065], sign-flip p=0.7891.",
+    "Across seven concepts, held-out AUROC vs max-active target specificity Spearman \u03c1=-0.185; descriptive only.",
+    "Held-out AUROC vs max-active JS specificity Spearman \u03c1=-0.148; descriptive only."
+  ],
+  "interpretation": "Max-active interventions produced larger task-level target effects than norm-matched random controls with paired uncertainty excluding zero. Predictive SAE features therefore show causal specificity when intervened where the selected feature is actually represented, while the final-token baseline quantifies sensitivity to intervention location. Moving from the final prompt token to the feature's maximum-activation token increased intervention coverage from 28.6% to 82.1%, showing that causal conclusions depend materially on where the representation is tested.",
+  "metrics": {
+    "mean_selected_feature_test_auroc": 0.9622395833333334,
+    "mean_selected_feature_test_auroc_bootstrap_ci_95": [
+      0.9267066592261906,
+      0.994419642857143
+    ],
+    "median_selected_feature_test_auroc": 0.9869791666666669,
+    "best_linear_probe_layer": 14,
+    "best_linear_probe_macro_auroc": 1.0,
+    "mean_paraphrase_topk_jaccard": 0.32550299223975043,
+    "mean_paraphrase_sparse_cosine": 0.9846351666472363,
+    "final_token_feature_coverage": 0.2857142857142857,
+    "prompt_anywhere_feature_coverage": 0.8214285714285714,
+    "max_active_feature_coverage": 0.8214285714285714,
+    "final_token_task_level": {
+      "sae_abs": 0.007574045897594507,
+      "random_abs": 0.004990028782880718,
+      "ratio": 1.5178361142081527,
+      "advantage": 0.002584017114713789,
+      "ci": [
+        -0.0005489836530094687,
+        0.006322265709085119
+      ],
+      "pvalue": 0.171875,
+      "n_tasks": 28
+    },
+    "final_token_active_only": {
+      "sae_abs": 0.026509160641580775,
+      "random_abs": 0.017465100740082513,
+      "ratio": 1.5178361142081527,
+      "advantage": 0.009044059901498262,
+      "ci": [
+        -0.0016551230626646388,
+        0.020267208322184146
+      ],
+      "pvalue": 0.171875,
+      "n_tasks": 8
+    },
+    "max_active_task_level": {
+      "sae_abs": 0.04140681956362508,
+      "random_abs": 0.01773720875956181,
+      "ratio": 2.3344608571122225,
+      "advantage": 0.023669610804063268,
+      "ci": [
+        0.0066882537599927475,
+        0.0468946453319534
+      ],
+      "pvalue": 9.99950002499875e-05,
+      "n_tasks": 28
+    },
+    "max_active_active_only": {
+      "sae_abs": 0.05040830207745662,
+      "random_abs": 0.021593123707292633,
+      "ratio": 2.334460857112223,
+      "advantage": 0.028815178370163983,
+      "ci": [
+        0.008352378036563645,
+        0.05887514829816571
+      ],
+      "pvalue": 0.00014999250037498125,
+      "n_tasks": 23
+    },
+    "feature_set_results": {
+      "1": {
+        "sae_abs": 0.0073844761188541,
+        "random_abs": 0.00605300132052173,
+        "ratio": 1.219969355337528,
+        "advantage": 0.0013314747983323686,
+        "ci": [
+          -0.0021684337141258357,
+          0.004932756118276826
+        ],
+        "pvalue": 0.453125,
+        "n_tasks": 28
+      },
+      "3": {
+        "sae_abs": 0.01165702566504476,
+        "random_abs": 0.00956058465609591,
+        "ratio": 1.2192795821971139,
+        "advantage": 0.0020964410089488496,
+        "ci": [
+          -0.003360107559378132,
+          0.009788807602100323
+        ],
+        "pvalue": 0.75146484375,
+        "n_tasks": 28
+      },
+      "5": {
+        "sae_abs": 0.010901511247668921,
+        "random_abs": 0.00997775314109664,
+        "ratio": 1.0925817760280598,
+        "advantage": 0.0009237581065722826,
+        "ci": [
+          -0.0035061794998390364,
+          0.006451443075535015
+        ],
+        "pvalue": 0.7890625,
+        "n_tasks": 28
+      }
+    },
+    "study_summary": {
+      "n_concepts": 7,
+      "selected_feature_pooling": "prompt-wide max SAE activation across non-padding prompt tokens",
+      "dense_probe_pooling": "final prompt token residual",
+      "primary_causal_position_policy": "max_feature_activation",
+      "causal_statistical_unit": "causal task; ablation and amplification are averaged within task before paired inference",
+      "median_selected_feature_resample_support": 1.0,
+      "final_token_feature_coverage": 0.2857142857142857,
+      "max_active_feature_coverage": 0.8214285714285714,
+      "final_token_target_specificity_ratio": 1.5178361142081527,
+      "max_active_target_specificity_ratio": 2.3344608571122225,
+      "final_token_target_paired_advantage": 0.002584017114713789,
+      "max_active_target_paired_advantage": 0.023669610804063268,
+      "final_token_target_paired_ci_95": [
+        -0.0005554523851190289,
+        0.006223834152167133
+      ],
+      "max_active_target_paired_ci_95": [
+        0.006155622166625111,
+        0.04787022493006328
+      ],
+      "final_token_target_sign_flip_pvalue": 0.171875,
+      "max_active_target_sign_flip_pvalue": 9.99950002499875e-05,
+      "most_predictive_concept": {
+        "concept": "german_language",
+        "heldout_auroc": 1.0
+      },
+      "highest_max_active_target_specificity": {
+        "concept": "uncertainty",
+        "ratio": 5.5052321815575915
+      },
+      "highest_max_active_js_specificity": {
+        "concept": "uncertainty",
+        "ratio": 6.015626813896881
+      },
+      "correlations": {
+        "heldout_auroc_vs_max_active_target_specificity": {
+          "rho": -0.18531232916527532,
+          "pvalue": 0.6907777961916857,
+          "n": 7
+        },
+        "heldout_auroc_vs_max_active_js_specificity": {
+          "rho": -0.14824986333222023,
+          "pvalue": 0.7510797526579065,
+          "n": 7
+        },
+        "heldout_f1_vs_max_active_target_specificity": {
+          "rho": 0.21821789023599242,
+          "pvalue": 0.638298871640929,
+          "n": 7
+        },
+        "candidate_resample_support_vs_max_active_target_specificity": {
+          "rho": NaN,
+          "pvalue": NaN,
+          "n": 7
+        }
+      },
+      "guardrail": "Max-active causal positions are selected from SAE activation only, never from behavioral outcome. Cross-concept Spearman correlations are descriptive because the study contains seven concepts."
+    }
+  }
+}

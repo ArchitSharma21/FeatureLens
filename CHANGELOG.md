@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.0.0
+
+- Published the completed offline study artifacts and public **Study** dashboard.
+- Finalized causal inference around two position policies: final prompt token and maximum selected-feature activation within the prompt.
+- Reported causal-task-level paired inference, separating intervention coverage from conditional effect strength.
+- Measured selected SAE features at 0.962 mean held-out AUROC; max-active causal edits reached 82.1% task coverage and 2.33× matched-random target effect on average.
+- Kept the weaker final-token baseline as a position-sensitivity control rather than replacing it.
+- Added the committed reproducibility bundle, including both Colab notebooks under `notebooks/`, fixed split metadata, measured CSV/JSON outputs, report, and figures.
+- Simplified release configuration/checks by removing historical per-version feature bookkeeping from `research_config.json`.
+- Public interface remains version-neutral; release metadata is internal to the repository.
+
 ## v0.16.0
 
 - Added two explicit offline causal-position policies: `final_token` and `max_feature_activation`. Max-active positions are selected only from SAE activation within the prompt, never from behavioral outcomes.

@@ -538,7 +538,7 @@ def _build_report_lines(
             "",
             "## Reproducibility",
             "",
-            "Run `python -m experiments.run_all --resume` for a fresh full study. For an existing v0.15 final-token study, run the v0.16 causal addendum notebook; it preserves the baseline, computes only max-active causal rows, and reruns CPU analysis/reporting.",
+            "Run `python -m experiments.run_all --resume` for a fresh full study. The causal-addendum notebook is retained as a migration utility for an already-completed final-token baseline.",
             "",
         ]
     )

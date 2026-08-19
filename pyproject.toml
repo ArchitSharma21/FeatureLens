@@ -1,6 +1,6 @@
 [project]
 name = "featurelens"
-version = "0.16.0"
+version = "1.0.0"
 description = "Causal sparse-feature interpretability workbench for Qwen3 and Qwen-Scope SAEs"
 requires-python = ">=3.10"
 
