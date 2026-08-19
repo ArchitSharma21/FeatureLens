@@ -16,6 +16,11 @@ INK_PLUM = "#786F82"
 INK_STONE = "#82827E"
 INK_BLUEGREY = "#687982"
 
+LATEX_DELIMITERS = [
+    {"left": "$$", "right": "$$", "display": True},
+    {"left": "$", "right": "$", "display": False},
+]
+
 STUDY = OfflineStudy()
 
 CSS = r"""
@@ -3112,6 +3117,24 @@ with gr.Blocks(title="FeatureLens — Causal Interpretability Workbench", fill_w
                 wrap=False,
                 max_height=300,
             )
+
+            with gr.Row(equal_height=False):
+                with gr.Column(scale=1):
+                    gr.Image(
+                        value=STUDY.figure("feature_auroc.png"),
+                        label="Held-out sparse-feature AUROC",
+                        interactive=False,
+                        show_label=True,
+                        height=360,
+                    )
+                with gr.Column(scale=1):
+                    gr.Image(
+                        value=STUDY.figure("feature_set_effects.png"),
+                        label="Feature-set causal effects",
+                        interactive=False,
+                        show_label=True,
+                        height=360,
+                    )
         else:
             gr.Markdown(
                 "Run the offline study to populate measured tables and figures. Until then, this tab stays intentionally empty."
@@ -3119,41 +3142,66 @@ with gr.Blocks(title="FeatureLens — Causal Interpretability Workbench", fill_w
 
     with gr.Tab("Method"):
         gr.Markdown(
-            r"""
+        r"""
 ### Reconstruction-preserving intervention
 
 For residual vector $h$, sparse coefficient $z_i$, decoder direction $d_i$, and scale $\alpha$:
 
 - **Ablate:** $h' = h - z_i d_i$
-- **Scale:** $h' = h + (\alpha - 1)z_i d_i$
+- **Scale:** $h' = h + (\alpha - 1) z_i d_i$
 - **Inject:** $h' = h + \delta d_i$
 
 For a feature set $S$:
 
-$$h' = h + \sum_{i \in S}\Delta z_i d_i.$$
+$$
+h' = h + \sum_{i \in S} \Delta z_i d_i
+$$
 
-FeatureLens patches the delta into the **original residual**; it never replaces the residual with the complete SAE reconstruction.
+FeatureLens patches the intervention delta into the **original residual**; it does not replace the residual with the full SAE reconstruction.
 
 ### Control discipline
 
-Batched experiments include an explicit **zero-edit row**. Causal effects are measured against that row rather than a separately executed baseline, which removes batch-vs-single floating-point drift from the measured effect. Random specificity uses an ensemble of norm-matched residual directions rather than one arbitrary seed.
+Batched experiments include an explicit **zero-edit reference**. Causal effects are measured against that condition rather than against a separately executed baseline, avoiding batch-versus-single numerical drift.
+
+Random specificity uses norm-matched residual directions so that SAE interventions are compared against perturbations with the same $L_2$ magnitude.
+
+### Causal position
+
+The offline study evaluates two intervention policies:
+
+- **Final token:** intervene at the final prompt-token residual.
+- **Max-active token:** intervene at the prompt position where the selected SAE feature has maximum activation,
+
+$$
+t^* = \arg\max_t z_f(t)
+$$
+
+where $z_f(t)$ is the activation of selected feature $f$ at token position $t$.
+
+The intervention location is chosen only from SAE activation; behavioral outcomes are not used to select the token.
+
+### Statistical unit
+
+For the offline causal study, the **causal task** is the primary statistical unit.
+
+Ablation and amplification effects are first aggregated within each task before paired bootstrap and sign-flip inference. This avoids treating two interventions on the same prompt as independent observations.
 
 ### Evidence ladder
 
 1. SAE reconstruction quality.
 2. Held-out feature/concept prediction.
-3. Concept-guided candidate discovery, batched causal triage, and random-controlled candidate comparison.
-4. Selected-feature concept contrast and token-local activation traces, completion-cue sensitivity, and cue × context specificity.
-5. Local and prompt-wide paraphrase robustness.
-6. Single-feature causal intervention and dose-response.
-7. Contrastive continuation preference under intervention.
-8. Joint feature-set intervention and set-size sensitivity.
-9. Decoder-direction geometry and individual-vs-joint non-additivity.
-10. Specificity relative to norm-matched random controls.
+3. Candidate-selection stability.
+4. Local and prompt-wide paraphrase robustness.
+5. Single-feature causal intervention and dose response.
+6. Contrastive continuation preference.
+7. Joint feature-set intervention and interaction analysis.
+8. Specificity relative to norm-matched random controls.
+9. Final-token versus max-active causal-position sensitivity.
 
-Association, robustness, geometry, and intervention evidence remain separate claims.
-"""
-        )
+Association, robustness, geometry, and causal intervention are treated as distinct forms of evidence.
+""",
+        latex_delimiters=LATEX_DELIMITERS,
+    )
 
     gr.HTML('<div class="bottom-spacer" aria-hidden="true"></div>')
 
