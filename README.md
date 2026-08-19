@@ -1,16 +1,3 @@
----
-title: FeatureLens
-emoji: 🔬
-colorFrom: gray
-colorTo: green
-sdk: gradio
-python_version: "3.12.12"
-sdk_version: "6.24.0"
-app_file: app.py
-pinned: false
-license: mit
----
-
 # FeatureLens
 
 FeatureLens is a causal interpretability workbench for `Qwen/Qwen3-1.7B-Base` and **Qwen-Scope residual-stream sparse autoencoders**. It asks one question:
