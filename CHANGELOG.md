@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.16.0
+
+- Added two explicit offline causal-position policies: `final_token` and `max_feature_activation`. Max-active positions are selected only from SAE activation within the prompt, never from behavioral outcomes.
+- Preserved the v0.15 final-token causal result as a positional baseline and added a causal-addendum runner that computes only the new max-active policy.
+- Changed primary paired causal inference to use the **causal task** as the statistical unit, averaging ablation and 2× amplification within each task before bootstrap/sign-flip inference.
+- Added exact sign-flip enumeration for small effective paired samples, with deterministic Monte-Carlo fallback for larger samples.
+- Separated causal **coverage** from conditional-on-active effect strength and added final-token vs max-active position-sensitivity summaries.
+- Added `causal_position_summary.csv`, a position-sensitivity report figure, max-active association-vs-causality synthesis, and updated Study-tab diagnostics.
+- Added `experiments/run_causal_addendum.py` and a Drive-backed Colab addendum notebook so a completed v0.15 study can be upgraded without recollecting discovery activations or rerunning feature-set inference.
+- Updated artifact validation and methodology documentation for the finalized v0.16 study schema.
+
 ## v0.15.0
 
 - Reworked the public Gradio surface around a documented **research-instrument design system** rather than SaaS/dashboard defaults.

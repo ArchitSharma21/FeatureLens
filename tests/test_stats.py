@@ -31,3 +31,11 @@ def test_sign_flip_small_for_consistent_effect():
 def test_sign_flip_one_for_identical_pairs():
     x = np.array([1.0, 2.0, 3.0])
     assert paired_sign_flip_pvalue(x, x, n_permutations=1000, seed=4) == 1.0
+
+
+def test_sign_flip_is_exact_for_small_effective_sample() -> None:
+    from featurelens.stats import paired_sign_flip_pvalue
+
+    # With two positive non-zero differences, only the ++ and -- assignments
+    # are as extreme as the observed all-positive mean: p = 2 / 4.
+    assert paired_sign_flip_pvalue([1.0, 1.0], [0.0, 0.0]) == 0.5

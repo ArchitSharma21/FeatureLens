@@ -60,15 +60,17 @@ The live app is exploratory. The offline study is the dataset-scale experiment.
 
 It uses **224 discovery prompts** arranged as 112 paraphrase pairs across seven controlled concepts, plus **28 separate causal tasks**. Concept evidence uses prompt-wide max-pooled SAE activations across non-padding tokens; final-token sparse activations are saved separately for local analyses.
 
+Causal evidence is reported under two position policies: the original **final-token** baseline and **max-feature-activation**, which patches the selected feature where it is most strongly represented in the prompt. Max-active positions are selected from SAE activation only, never from downstream behavioral effects. Primary uncertainty uses the causal task as the statistical unit.
+
 The study produces:
 
 - train-only feature selection with held-out AUROC/F1;
 - a dense final-token residual linear-probe baseline;
 - paraphrase stability;
 - 128-resample candidate-selection sensitivity;
-- random-controlled single-feature causal results;
+- random-controlled single-feature causal results under both final-token and max-feature-activation patch policies;
 - top-1/3/5 feature-set causal results;
-- cross-concept association-versus-causality synthesis;
+- causal-position coverage/sensitivity and cross-concept association-versus-causality synthesis;
 - uncertainty-aware report figures and a measured Markdown report.
 
 Run the full pipeline with:
@@ -81,6 +83,12 @@ On a memory-constrained GPU, activation collection can be tuned without changing
 
 ```bash
 python -m experiments.run_all --resume --activation-batch-size 8
+```
+
+If you already completed the v0.15 study, upgrade it with only the positional causal addendum:
+
+```bash
+python -m experiments.run_causal_addendum --resume
 ```
 
 After the expensive model stages exist, CPU-only analysis can be regenerated with:
@@ -97,7 +105,7 @@ python -m scripts.validate_artifacts
 
 ### Google Colab
 
-A ready-to-run notebook is included at [`notebooks/FeatureLens_Offline_Study_Colab.ipynb`](notebooks/FeatureLens_Offline_Study_Colab.ipynb). It mounts Google Drive for persistent artifacts, keeps the Hugging Face cache on the Colab VM, chooses a conservative activation batch from available VRAM, and runs the resumable pipeline.
+A ready-to-run full-study notebook is included at [`notebooks/FeatureLens_Offline_Study_Colab.ipynb`](notebooks/FeatureLens_Offline_Study_Colab.ipynb). If the v0.15 study is already complete, use [`notebooks/FeatureLens_Causal_Addendum_Colab.ipynb`](notebooks/FeatureLens_Causal_Addendum_Colab.ipynb) instead; it runs only the max-active causal addendum and CPU synthesis.
 
 See [`docs/COLAB.md`](docs/COLAB.md) for the exact workflow.
 
@@ -111,7 +119,9 @@ artifacts/
 ├── layer_metrics.csv
 ├── stability.csv
 ├── selection_stability.csv
-├── causal_results.csv
+├── causal_results_final_token.csv
+├── causal_results_max_active.csv
+├── causal_position_summary.csv
 ├── feature_set_results.csv
 ├── study_feature_summary.csv
 ├── study_summary.json

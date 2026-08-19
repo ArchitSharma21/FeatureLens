@@ -22,6 +22,7 @@ REQUIRED = [
     'featurelens/study.py',
     'experiments/run_all.py',
     'experiments/run_causal.py',
+    'experiments/run_causal_addendum.py',
     'experiments/run_feature_sets.py',
     'experiments/analyze_stability.py',
     'experiments/analyze_study.py',
@@ -31,7 +32,9 @@ REQUIRED = [
     'docs/VALIDATION.md',
     'docs/OFFLINE_STUDY.md',
     'docs/COLAB.md',
+    'docs/CAUSAL_ADDENDUM.md',
     'notebooks/FeatureLens_Offline_Study_Colab.ipynb',
+    'notebooks/FeatureLens_Causal_Addendum_Colab.ipynb',
     'scripts/ui_smoke.py',
     'tests/test_offline_study.py',
     'scripts/validate_artifacts.py',
@@ -273,6 +276,25 @@ def check_config(config: dict) -> None:
             'research_config.json ui_and_runner_features_v0_15 mismatch: '
             f'{sorted(actual_v15)}'
         )
+
+    required_v16 = {
+        'final_token_vs_max_feature_activation_causal_position_sensitivity',
+        'causal_task_level_statistical_inference',
+        'coverage_separated_from_conditional_effect_strength',
+        'exact_small_sample_sign_flip_tests',
+        'causal_addendum_colab_runner',
+        'position_sensitivity_study_dashboard',
+    }
+    actual_v16 = set(config.get('offline_features_v0_16', []))
+    if actual_v16 != required_v16:
+        raise SystemExit(
+            'research_config.json offline_features_v0_16 mismatch: '
+            f'{sorted(actual_v16)}'
+        )
+    if config.get('offline_causal_position_policies') != ['final_token', 'max_feature_activation']:
+        raise SystemExit('Offline causal position policies must be final_token and max_feature_activation.')
+    if config.get('primary_offline_causal_position_policy') != 'max_feature_activation':
+        raise SystemExit('Primary offline causal position policy must be max_feature_activation.')
     if config.get('offline_selection_resamples') != 128:
         raise SystemExit('Offline selection resamples must be 128.')
     if 'prompt-wide' not in str(config.get('offline_feature_pooling', '')):
@@ -347,11 +369,14 @@ def check_readme() -> None:
         '--activation-batch-size',
         'validate_artifacts',
         'FeatureLens_Offline_Study_Colab.ipynb',
+        'FeatureLens_Causal_Addendum_Colab.ipynb',
+        'max-feature-activation',
+        'causal task',
         'DESIGN.md',
     ]
     missing = [value for value in required_strings if value.lower() not in readme.lower()]
     if missing:
-        raise SystemExit(f'README.md is missing required v0.15 content: {missing}')
+        raise SystemExit(f'README.md is missing required v0.16 content: {missing}')
 
     # Public README should not lead with release-train marketing. Version history belongs in CHANGELOG.
     if '> **v0.' in readme or '## v0.' in readme:
@@ -360,8 +385,8 @@ def check_readme() -> None:
 
 def check_pyproject() -> None:
     text = (ROOT / 'pyproject.toml').read_text(encoding='utf-8')
-    if 'version = "0.15.0"' not in text:
-        raise SystemExit('pyproject.toml must declare version 0.15.0.')
+    if 'version = "0.16.0"' not in text:
+        raise SystemExit('pyproject.toml must declare version 0.16.0.')
 
 
 def main() -> None:
@@ -379,7 +404,7 @@ def main() -> None:
     print(f'  layers: {config["layers"]}')
     print(f'  feature-set sizes: {config["feature_set_sizes"]}')
     print(f'  random controls: {config["live_random_controls"]}')
-    print('  release: v0.15.0')
+    print('  release: v0.16.0')
 
 
 if __name__ == '__main__':

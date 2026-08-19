@@ -57,8 +57,15 @@ def paired_sign_flip_pvalue(
     *,
     n_permutations: int = 20000,
     seed: int = 42,
+    exact_max_nonzero_pairs: int = 18,
 ) -> float:
-    """Two-sided paired randomization test for a non-zero mean difference."""
+    """Two-sided paired sign-flip test for a non-zero mean difference.
+
+    For small effective samples the test is enumerated exactly. Zero-difference
+    pairs are removed before deciding whether exact enumeration is feasible;
+    their sign cannot change the statistic. Larger samples use a deterministic
+    Monte-Carlo approximation.
+    """
     x = np.asarray(a, dtype=float)
     y = np.asarray(b, dtype=float)
     mask = np.isfinite(x) & np.isfinite(y)
@@ -68,14 +75,36 @@ def paired_sign_flip_pvalue(
     observed = abs(float(diff.mean()))
     if observed == 0.0:
         return 1.0
+
+    nonzero = diff[np.abs(diff) > 0.0]
+    if nonzero.size == 0:
+        return 1.0
+
+    # Preserve the original mean denominator: zero-difference pairs contribute
+    # to n but never to a sign-flipped numerator.
+    denominator = float(diff.size)
+    if nonzero.size <= int(exact_max_nonzero_pairs):
+        count = 1 << int(nonzero.size)
+        extreme = 0
+        for bits in range(count):
+            signs = np.fromiter(
+                (1.0 if bits & (1 << idx) else -1.0 for idx in range(nonzero.size)),
+                dtype=float,
+                count=nonzero.size,
+            )
+            statistic = abs(float(np.sum(signs * nonzero) / denominator))
+            if statistic >= observed - 1e-15:
+                extreme += 1
+        return float(extreme / count)
+
     rng = np.random.default_rng(seed)
     extreme = 0
     batch = 2000
     remaining = int(n_permutations)
     while remaining > 0:
         n = min(batch, remaining)
-        signs = rng.choice(np.array([-1.0, 1.0]), size=(n, diff.size))
-        permuted = np.abs((signs * diff).mean(axis=1))
+        signs = rng.choice(np.array([-1.0, 1.0]), size=(n, nonzero.size))
+        permuted = np.abs((signs * nonzero).sum(axis=1) / denominator)
         extreme += int(np.count_nonzero(permuted >= observed))
         remaining -= n
     return float((extreme + 1) / (int(n_permutations) + 1))

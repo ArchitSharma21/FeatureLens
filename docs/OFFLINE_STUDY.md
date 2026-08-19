@@ -93,3 +93,22 @@ python -m experiments.run_all --resume --activation-batch-size 8 --activation-ma
 ```
 
 These two activation flags only affect memory/time during activation collection.
+
+## v0.16 causal-position sensitivity
+
+The final study reports two single-feature causal policies rather than conflating concept predictiveness with one arbitrary patch position:
+
+- `final_token`: the original causal baseline;
+- `max_feature_activation`: patch the selected feature where its SAE activation is maximal within the prompt.
+
+The max-active token is selected before intervention from feature activation only. The behavioral target never participates in position selection.
+
+Primary paired inference uses the **causal task** as the unit: ablation and amplification are aggregated within task before bootstrap confidence intervals and sign-flip tests. The report also separates feature coverage from conditional-on-active effect strength.
+
+A completed v0.15 run can be upgraded without repeating discovery/model-activation collection:
+
+```bash
+python -m experiments.run_causal_addendum --resume
+```
+
+See [`CAUSAL_ADDENDUM.md`](CAUSAL_ADDENDUM.md).

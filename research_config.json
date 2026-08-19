@@ -90,7 +90,7 @@
     "contrastive_continuation_preference_test",
     "feature_decoder_geometry"
   ],
-  "concept_candidate_discovery_metric": "balanced exploratory score = selectivity × target activation rate × log1p(target mean); causal-ready mode additionally requires current-token activity and log-scales that activation; raw mean-difference remains available as a scale-sensitive comparison",
+  "concept_candidate_discovery_metric": "balanced exploratory score = selectivity \u00d7 target activation rate \u00d7 log1p(target mean); causal-ready mode additionally requires current-token activity and log-scales that activation; raw mean-difference remains available as a scale-sensitive comparison",
   "completion_cue_scan": "final-token feature activation after controlled suffix/cue substitution",
   "live_features_v0_6": [
     "start_here_plain_language_onboarding",
@@ -205,5 +205,19 @@
     "muted_cross_target_chart_series",
     "colab_offline_runner_notebook",
     "task_level_causal_and_feature_set_resume"
+  ],
+  "offline_causal_position_policies": [
+    "final_token",
+    "max_feature_activation"
+  ],
+  "primary_offline_causal_position_policy": "max_feature_activation",
+  "offline_causal_statistical_unit": "causal task; average ablation and amplification within task before paired bootstrap/sign-flip inference",
+  "offline_features_v0_16": [
+    "final_token_vs_max_feature_activation_causal_position_sensitivity",
+    "causal_task_level_statistical_inference",
+    "coverage_separated_from_conditional_effect_strength",
+    "exact_small_sample_sign_flip_tests",
+    "causal_addendum_colab_runner",
+    "position_sensitivity_study_dashboard"
   ]
 }

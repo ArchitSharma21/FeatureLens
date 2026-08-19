@@ -1,83 +1,36 @@
-# FeatureLens v0.15 validation
+# FeatureLens v0.16 validation
 
-v0.15 is a **public-design and offline-runner hardening release**. It does not change the already validated live Qwen/SAE inference methods. Do not spend ZeroGPU quota rerunning causal, paraphrase, layer, cue, discovery, or feature-set experiments for this release.
+v0.16 changes the **offline causal methodology**, not the already validated live HF inference UI. Do not spend ZeroGPU quota retesting live Workbench paths.
 
 ## Local software gate
 
-Run from the repository root:
-
 ```bash
-python3 -m pytest -q && \
-python3 -m compileall -q app.py featurelens experiments scripts && \
-python3 -m ruff check app.py featurelens experiments tests scripts && \
-python3 scripts/ui_smoke.py && \
+python3 -m pytest -q
+python3 -m compileall -q app.py featurelens experiments scripts
+python3 -m ruff check app.py featurelens experiments tests scripts
+python3 scripts/ui_smoke.py
 python3 scripts/release_check.py
 ```
 
-Then validate the Colab notebook JSON:
+## Addendum acceptance
 
-```bash
-python3 - <<'PY'
-import nbformat
-nb = nbformat.read('notebooks/FeatureLens_Offline_Study_Colab.ipynb', as_version=4)
-nbformat.validate(nb)
-print('Colab notebook: PASS')
-PY
-```
+Use `notebooks/FeatureLens_Causal_Addendum_Colab.ipynb` with the completed v0.15 Drive run.
 
-## Hugging Face acceptance — no GPU calls
+The addendum is successful when:
 
-After pushing, only inspect the rendered interface.
+1. `causal_results_final_token.csv` exists and preserves the v0.15 baseline.
+2. `causal_results_max_active.csv` completes all 28 causal tasks with 8 random controls per intervention.
+3. `causal_position_summary.csv` contains both `final_token` and `max_feature_activation` policies.
+4. `study_summary.json` declares `max_feature_activation` as the primary causal position policy and causal-task-level inference as the statistical unit.
+5. `python -m scripts.validate_artifacts` prints `PASS`.
+6. `FeatureLens_offline_results_v016.zip` is created without activation caches.
 
-### A. Header and navigation
+## HF acceptance after final artifacts are committed
 
-Pass when:
+No GPU call is required. Open **Study** and verify:
 
-- the header shows **FeatureLens** and one factual subtitle;
-- there is no visible release/version badge;
-- tabs read **Guide, Workbench, Feature sets, Features, Paraphrases, Layers, Study, Method**;
-- tabs are visually flat rather than pill/card navigation.
-
-### B. Guide
-
-Open **Guide**.
-
-Pass when:
-
-- there is no three-card “step 1 / step 2 / step 3” onboarding grid;
-- the workflow is short prose;
-- headings use the serif display face while controls/body copy use the neutral sans-serif face;
-- no gradients, glow, badge clusters, or decorative cards are visible.
-
-### C. Workbench without running inference
-
-Open **Workbench**.
-
-Pass when:
-
-- experiment sections have a clear typographic hierarchy;
-- related fields sit close together and separate experiments have more breathing room;
-- primary experiment buttons are compact muted-teal actions, not full-width desktop banners;
-- **Copy TSV** is visually secondary;
-- table titles are clearly larger than table body text;
-- no duplicate context cards appear inside the tab—the global **Context** line is the context source of truth.
-
-### D. Features tab without running inference
-
-Open **Features**.
-
-Pass when:
-
-- discovery, triage, controlled comparison, cross-target profile, and feature diagnostics read as sections of one tool rather than nested cards;
-- helper copy is short and does not repeatedly restate “not a semantic label” after every empty result;
-- the page remains usable in both normal desktop width and a narrower browser window.
-
-### E. Study empty state
-
-Open **Study** before real artifacts are committed.
-
-Pass when it clearly says the offline study is not materialized and does not show fabricated metrics or placeholder result plots.
-
-## Colab runner dry check
-
-Do not run the full model study merely to validate v0.15. Open the included notebook in Colab and execute only the first GPU-detection cell if desired. The full study should be started only when you are ready to produce the actual empirical artifacts.
+- the measured headline is populated;
+- final-token and max-active coverage/specificity are visible;
+- the causal-position table and figure render;
+- the association-vs-causality figure uses max-active specificity;
+- no placeholder or old v0.15 significance language remains.

@@ -3041,6 +3041,7 @@ with gr.Blocks(title="FeatureLens — Causal Interpretability Workbench", fill_w
 
         offline_study = STUDY.dataframe("study_feature_summary.csv")
         offline_stability = STUDY.dataframe("selection_stability.csv")
+        offline_positions = STUDY.dataframe("causal_position_summary.csv")
         offline_layers = STUDY.dataframe("layer_metrics.csv")
 
         if not offline_study.empty:
@@ -3067,27 +3068,39 @@ with gr.Blocks(title="FeatureLens — Causal Interpretability Workbench", fill_w
 
             with gr.Row(equal_height=False):
                 with gr.Column(scale=3):
-                    _table_heading("Candidate selection stability")
-                    stability_preview = offline_stability.sort_values(
-                        ["resample_support", "full_score"], ascending=[False, False]
-                    ).head(40)
+                    _table_heading("Causal position sensitivity")
+                    position_preview = offline_positions[offline_positions["concept"] == "__all__"] if not offline_positions.empty else offline_positions
                     gr.Dataframe(
-                        value=stability_preview,
+                        value=position_preview,
                         interactive=False,
                         show_label=False,
                         buttons=["fullscreen"],
                         elem_classes=["result-table"],
                         wrap=False,
-                        max_height=420,
+                        max_height=320,
                     )
                 with gr.Column(scale=2):
                     gr.Image(
-                        value=STUDY.figure("candidate_stability.png"),
-                        label="Selected-feature resample support",
+                        value=STUDY.figure("causal_position_sensitivity.png"),
+                        label="Final-token vs max-active intervention",
                         interactive=False,
                         show_label=True,
                         height=360,
                     )
+
+            _table_heading("Candidate selection stability")
+            stability_preview = offline_stability.sort_values(
+                ["resample_support", "full_score"], ascending=[False, False]
+            ).head(40)
+            gr.Dataframe(
+                value=stability_preview,
+                interactive=False,
+                show_label=False,
+                buttons=["fullscreen"],
+                elem_classes=["result-table"],
+                wrap=False,
+                max_height=360,
+            )
 
             _table_heading("Layer diagnostics")
             gr.Dataframe(

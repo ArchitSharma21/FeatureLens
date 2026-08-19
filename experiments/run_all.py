@@ -80,12 +80,30 @@ def main() -> None:
         ],
         resume=args.resume,
     )
-    causal_output = artifact_dir / 'causal_results.csv'
+    final_output = artifact_dir / 'causal_results_final_token.csv'
     run(
         'experiments.run_causal',
-        outputs=[causal_output, causal_output.with_suffix(causal_output.suffix + '.complete')],
+        outputs=[final_output, final_output.with_suffix(final_output.suffix + '.complete')],
         resume=args.resume,
-        extra_args=['--resume'] if args.resume else None,
+        extra_args=[
+            '--position-policy', 'final_token',
+            '--output', str(final_output),
+            *(['--resume'] if args.resume else []),
+        ],
+    )
+    max_active_output = artifact_dir / 'causal_results_max_active.csv'
+    run(
+        'experiments.run_causal',
+        outputs=[
+            max_active_output,
+            max_active_output.with_suffix(max_active_output.suffix + '.complete'),
+        ],
+        resume=args.resume,
+        extra_args=[
+            '--position-policy', 'max_feature_activation',
+            '--output', str(max_active_output),
+            *(['--resume'] if args.resume else []),
+        ],
     )
     feature_set_output = artifact_dir / 'feature_set_results.csv'
     run(

@@ -84,7 +84,9 @@ The bundle is expected to contain files such as:
 - `artifacts/layer_metrics.csv`
 - `artifacts/stability.csv`
 - `artifacts/selection_stability.csv`
-- `artifacts/causal_results.csv`
+- `artifacts/causal_results_final_token.csv`
+- `artifacts/causal_results_max_active.csv`
+- `artifacts/causal_position_summary.csv`
 - `artifacts/feature_set_results.csv`
 - `artifacts/study_feature_summary.csv`
 - `artifacts/study_summary.json`
@@ -93,3 +95,13 @@ The bundle is expected to contain files such as:
 - `artifacts/figures/*.png`
 
 Do not commit the `artifacts/activations/` directory.
+
+## v0.16 causal addendum after a completed v0.15 study
+
+If the full v0.15 Colab study already completed, **do not rerun the full notebook**. Use:
+
+`notebooks/FeatureLens_Causal_Addendum_Colab.ipynb`
+
+The addendum notebook copies only the small existing study outputs to a new Drive folder, preserves the final-token causal baseline, computes the 28-task `max_feature_activation` causal policy, regenerates the CPU study/report artifacts, validates them, and creates a new publishable ZIP.
+
+The addendum does not recollect 224-prompt activations, refit feature/probe evaluations, rerun stability resampling, or rerun the 1/3/5 feature-set stage.

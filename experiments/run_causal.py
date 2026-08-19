@@ -12,14 +12,17 @@ from experiments.common import ARTIFACT_DIR, DATA_DIR, load_jsonl, set_seed
 from featurelens.config import SETTINGS
 from featurelens.interventions import InterventionSpec, normalized_random_control, residual_delta
 from featurelens.metrics import js_divergence_from_logits, sequence_logprob_summary
-from featurelens.sae import SAEStore
+from featurelens.sae import SAEStore, SparseEncoding
+
+POSITION_POLICIES = ('final_token', 'max_feature_activation')
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Run held-out causal SAE interventions.')
     parser.add_argument('--tasks', type=Path, default=DATA_DIR / 'causal_tasks.jsonl')
     parser.add_argument('--catalog', type=Path, default=ARTIFACT_DIR / 'feature_catalog.csv')
-    parser.add_argument('--output', type=Path, default=ARTIFACT_DIR / 'causal_results.csv')
+    parser.add_argument('--output', type=Path, default=None)
+    parser.add_argument('--position-policy', choices=POSITION_POLICIES, default='final_token')
     parser.add_argument('--seed', type=int, default=42)
     parser.add_argument('--random-controls', type=int, default=8)
     parser.add_argument(
@@ -30,6 +33,10 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def default_output(policy: str) -> Path:
+    if policy == 'final_token':
+        return ARTIFACT_DIR / 'causal_results_final_token.csv'
+    return ARTIFACT_DIR / 'causal_results_max_active.csv'
 
 
 def _completion_marker(path: Path) -> Path:
@@ -85,8 +92,6 @@ def replace_hidden(output, hidden):
 
 
 def _make_capture_hook(capture: dict):
-    """Bind a per-task capture dictionary before registering the hook."""
-
     def capture_hook(_module, _inp, output):
         if 'hidden' not in capture:
             capture['hidden'] = hidden_from_output(output).detach()
@@ -96,18 +101,17 @@ def _make_capture_hook(capture: dict):
 
 def _make_batch_edit_hook(
     applied: dict[str, bool],
-    prompt_len: int,
+    intervention_token_index: int,
     deltas: torch.Tensor,
 ):
-    """Bind per-task edit state so hooks cannot capture a later loop iteration."""
-
     def batch_edit_hook(_module, _inp, output):
         if applied['done']:
             return output
         hidden = hidden_from_output(output)
         modified = hidden.clone()
-        modified[:, prompt_len - 1, :] = (
-            modified[:, prompt_len - 1, :] + deltas.to(hidden.device, hidden.dtype)
+        modified[:, intervention_token_index, :] = (
+            modified[:, intervention_token_index, :]
+            + deltas.to(hidden.device, hidden.dtype)
         )
         applied['done'] = True
         return replace_hidden(output, modified)
@@ -136,9 +140,45 @@ def make_random_controls(delta: torch.Tensor, seed: int, count: int) -> list[tor
     ]
 
 
+def feature_activation_trace(encoding: SparseEncoding, feature_id: int) -> torch.Tensor:
+    """Return one TopK feature activation per encoded token."""
+    indices = encoding.indices
+    values = encoding.values
+    if indices.ndim != 2 or values.ndim != 2:
+        raise ValueError('Expected tokenwise sparse encoding with shape [tokens, top_k].')
+    mask = indices == int(feature_id)
+    return torch.where(mask, values, torch.zeros_like(values)).max(dim=-1).values
+
+
+def choose_intervention_position(
+    token_activations: torch.Tensor,
+    *,
+    prompt_len: int,
+    position_policy: str,
+) -> tuple[int, float, bool]:
+    if prompt_len < 1:
+        raise ValueError('Prompt must contain at least one token.')
+    if position_policy == 'final_token':
+        index = prompt_len - 1
+        activation = float(token_activations[index].item())
+        return index, activation, activation > 0.0
+    if position_policy != 'max_feature_activation':
+        raise ValueError(f'Unknown position policy: {position_policy}')
+
+    max_activation, max_index = torch.max(token_activations[:prompt_len], dim=0)
+    activation = float(max_activation.item())
+    if activation <= 0.0:
+        # No selected feature is represented in TopK anywhere in the prompt.
+        # Keep a deterministic final-token location; the feature delta is zero.
+        return prompt_len - 1, 0.0, False
+    return int(max_index.item()), activation, True
+
+
 @torch.inference_mode()
 def main() -> None:
     args = parse_args()
+    if args.output is None:
+        args.output = default_output(args.position_policy)
     set_seed(args.seed)
     tasks = load_jsonl(args.tasks)
     selected = load_selected_features(args.catalog)
@@ -183,7 +223,10 @@ def main() -> None:
     for task_idx, task in enumerate(tasks):
         task_id = str(task['id'])
         if args.resume and completed_counts.get(task_id, 0) == expected_rows_per_task:
-            print(f"SKIP causal task {task_idx + 1}/{len(tasks)}: {task_id}", flush=True)
+            print(
+                f'SKIP {args.position_policy} causal task {task_idx + 1}/{len(tasks)}: {task_id}',
+                flush=True,
+            )
             continue
         if args.resume and completed_counts.get(task_id, 0):
             results = [row for row in results if str(row.get('task_id', '')) != task_id]
@@ -201,10 +244,9 @@ def main() -> None:
             raise RuntimeError(f"Target tokenization empty for task {task['id']}")
         target_ids = [int(x) for x in target_ids]
         full_inputs = append_target(prompt_inputs, target_ids)
+
         capture: dict = {}
-        handle = model.model.layers[layer].register_forward_hook(
-            _make_capture_hook(capture)
-        )
+        handle = model.model.layers[layer].register_forward_hook(_make_capture_hook(capture))
         single_baseline_out = model(**full_inputs, use_cache=False)
         handle.remove()
         single_baseline_logits = single_baseline_out.logits[0]
@@ -214,9 +256,24 @@ def main() -> None:
             target_ids=target_ids,
         )
 
-        residual = capture['hidden'][0, prompt_len - 1]
-        encoding = sae.encode(residual)
-        original_activation = encoding.activation_for(feature_id)
+        prompt_hidden = capture['hidden'][0, :prompt_len]
+        token_encoding = sae.encode(prompt_hidden)
+        token_activations = feature_activation_trace(token_encoding, feature_id)
+        final_token_activation = float(token_activations[prompt_len - 1].item())
+        max_activation_value, max_activation_index = torch.max(token_activations, dim=0)
+        max_prompt_activation = float(max_activation_value.item())
+        max_prompt_index = int(max_activation_index.item()) if max_prompt_activation > 0 else prompt_len - 1
+        active_anywhere = max_prompt_activation > 0.0
+
+        intervention_index, original_activation, active_at_intervention = choose_intervention_position(
+            token_activations,
+            prompt_len=prompt_len,
+            position_policy=args.position_policy,
+        )
+        prompt_token_ids = prompt_inputs['input_ids'][0]
+        intervention_token_text = tokenizer.decode([int(prompt_token_ids[intervention_index].item())])
+        max_prompt_token_text = tokenizer.decode([int(prompt_token_ids[max_prompt_index].item())])
+        final_token_text = tokenizer.decode([int(prompt_token_ids[prompt_len - 1].item())])
 
         specs = [
             ('ablate', InterventionSpec('ablate', 0.0)),
@@ -257,7 +314,7 @@ def main() -> None:
         repeated = {key: value.repeat(deltas.shape[0], 1) for key, value in full_inputs.items()}
         applied = {'done': False}
         hook = model.model.layers[layer].register_forward_hook(
-            _make_batch_edit_hook(applied, prompt_len, deltas)
+            _make_batch_edit_hook(applied, intervention_index, deltas)
         )
         edited_out = model(**repeated, use_cache=False)
         hook.remove()
@@ -278,10 +335,14 @@ def main() -> None:
         baseline_rank = int((baseline_next > baseline_next[target_id]).sum().item()) + 1
         baseline_top1 = int(torch.argmax(baseline_next).item())
 
-        for row_idx, (intervention_name, condition, control_id, _spec, applied_delta, delta_activation) in enumerate(
-            condition_meta,
-            start=1,
-        ):
+        for row_idx, (
+            intervention_name,
+            condition,
+            control_id,
+            _spec,
+            applied_delta,
+            delta_activation,
+        ) in enumerate(condition_meta, start=1):
             modified_logits = edited_out.logits[row_idx]
             modified_next = modified_logits[prompt_len - 1]
             modified_prob = float(torch.softmax(modified_next.float(), dim=-1)[target_id].item())
@@ -305,7 +366,19 @@ def main() -> None:
                     'feature_train_auroc': choice['train_auroc'],
                     'feature_test_auroc': choice['test_auroc'],
                     'feature_test_f1': choice['test_f1'],
+                    'position_policy': args.position_policy,
+                    'intervention_token_index': intervention_index,
+                    'intervention_token_text': intervention_token_text,
+                    'final_token_index': prompt_len - 1,
+                    'final_token_text': final_token_text,
+                    'max_prompt_feature_token_index': max_prompt_index,
+                    'max_prompt_feature_token_text': max_prompt_token_text,
                     'feature_activation': original_activation,
+                    'final_token_feature_activation': final_token_activation,
+                    'max_prompt_feature_activation': max_prompt_activation,
+                    'feature_active_at_intervention': int(active_at_intervention),
+                    'feature_active_at_final_token': int(final_token_activation > 0.0),
+                    'feature_active_anywhere': int(active_anywhere),
                     'intervention': intervention_name,
                     'condition': condition,
                     'control_id': control_id,
@@ -335,11 +408,15 @@ def main() -> None:
                 }
             )
         _write_rows_atomic(args.output, results)
-        print(f"Causal task {task_idx + 1}/{len(tasks)}: {concept}", flush=True)
+        print(
+            f'Causal {args.position_policy} task {task_idx + 1}/{len(tasks)}: '
+            f'{concept} @ token {intervention_index} (activation {original_activation:.4f})',
+            flush=True,
+        )
 
     _write_rows_atomic(args.output, results)
     marker.write_text('complete\n', encoding='utf-8')
-    print(f'Wrote {len(results)} causal intervention rows to {args.output}')
+    print(f'Wrote {len(results)} {args.position_policy} causal rows to {args.output}')
 
 
 if __name__ == '__main__':

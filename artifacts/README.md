@@ -1,44 +1,39 @@
 # Generated artifacts
 
-This directory intentionally ships without invented empirical results.
+The repository ships without invented empirical results. The finalized v0.16 study uses prompt-wide feature evidence plus two causal position policies.
 
-Run the full study on a CUDA machine:
-
-```bash
-python experiments/run_all.py
-```
-
-For an interruptible session:
+Fresh full study:
 
 ```bash
-python experiments/run_all.py --resume
+python -m experiments.run_all --resume
 ```
 
-If the expensive activation and causal artifacts already exist, regenerate only CPU analysis/report outputs with:
+Upgrade an already completed v0.15 study without recollecting discovery activations:
 
 ```bash
-python experiments/run_analysis_only.py
+python -m experiments.run_causal_addendum --resume
 ```
 
-v0.14 produces:
+The public artifact set includes:
 
-- prompt-wide activation caches plus separate final-token sparse activations;
 - `feature_catalog.csv`;
 - `layer_metrics.csv`;
 - `stability.csv`;
 - `selection_stability.csv`;
-- `causal_results.csv`;
+- `causal_results_final_token.csv`;
+- `causal_results_max_active.csv`;
+- `causal_position_summary.csv`;
 - `feature_set_results.csv`;
 - `study_feature_summary.csv`;
 - `study_summary.json`;
 - `summary.json`;
 - `report.md`;
-- report figures including association-vs-causality and candidate-stability plots.
+- report figures including causal-position sensitivity and association-vs-causality.
 
-Validate the public artifact set with:
+Validate before commit:
 
 ```bash
 python -m scripts.validate_artifacts
 ```
 
-`artifacts/activations/` contains large residual/sparse caches and stays gitignored. Commit only the small CSV/JSON/report/figure outputs if you want the live **Offline study** tab to display measured results and benchmark-derived feature hints.
+`artifacts/activations/` remains gitignored. Commit only the small CSV/JSON/report/figure outputs.
