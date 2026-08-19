@@ -1,0 +1,224 @@
+{"id": 0, "concept": "code", "pair_id": "code-00", "variant": 0, "text": "Write a Python function that returns the larger of two integers."}
+{"id": 1, "concept": "code", "pair_id": "code-00", "variant": 1, "text": "In Python, create a function that chooses the maximum of two integer inputs."}
+{"id": 2, "concept": "code", "pair_id": "code-01", "variant": 0, "text": "Explain what a recursive function does in a program."}
+{"id": 3, "concept": "code", "pair_id": "code-01", "variant": 1, "text": "Describe recursion in the context of a programming function."}
+{"id": 4, "concept": "code", "pair_id": "code-02", "variant": 0, "text": "Show a JavaScript loop that prints numbers from one to five."}
+{"id": 5, "concept": "code", "pair_id": "code-02", "variant": 1, "text": "Give JavaScript code for iterating over the integers 1 through 5 and logging them."}
+{"id": 6, "concept": "code", "pair_id": "code-03", "variant": 0, "text": "What is the purpose of a hash map in software?"}
+{"id": 7, "concept": "code", "pair_id": "code-03", "variant": 1, "text": "Explain why programmers use hash maps or dictionaries."}
+{"id": 8, "concept": "code", "pair_id": "code-04", "variant": 0, "text": "Write SQL that selects every row from a table named users."}
+{"id": 9, "concept": "code", "pair_id": "code-04", "variant": 1, "text": "Provide a SQL query to retrieve all records in the users table."}
+{"id": 10, "concept": "code", "pair_id": "code-05", "variant": 0, "text": "How do I catch an exception in Python?"}
+{"id": 11, "concept": "code", "pair_id": "code-05", "variant": 1, "text": "Show the Python syntax for handling an exception with try and except."}
+{"id": 12, "concept": "code", "pair_id": "code-06", "variant": 0, "text": "Explain the difference between a list and a tuple in Python."}
+{"id": 13, "concept": "code", "pair_id": "code-06", "variant": 1, "text": "Compare Python lists with tuples."}
+{"id": 14, "concept": "code", "pair_id": "code-07", "variant": 0, "text": "Write a function that checks whether a string is a palindrome."}
+{"id": 15, "concept": "code", "pair_id": "code-07", "variant": 1, "text": "Create code that tests if text reads the same forwards and backwards."}
+{"id": 16, "concept": "code", "pair_id": "code-08", "variant": 0, "text": "What does git rebase do?"}
+{"id": 17, "concept": "code", "pair_id": "code-08", "variant": 1, "text": "Describe the effect of rebasing a Git branch."}
+{"id": 18, "concept": "code", "pair_id": "code-09", "variant": 0, "text": "How can a REST API return JSON?"}
+{"id": 19, "concept": "code", "pair_id": "code-09", "variant": 1, "text": "Explain how a web API endpoint sends a JSON response."}
+{"id": 20, "concept": "code", "pair_id": "code-10", "variant": 0, "text": "Write pseudocode for binary search."}
+{"id": 21, "concept": "code", "pair_id": "code-10", "variant": 1, "text": "Describe the binary-search algorithm as pseudocode."}
+{"id": 22, "concept": "code", "pair_id": "code-11", "variant": 0, "text": "What is a class constructor used for?"}
+{"id": 23, "concept": "code", "pair_id": "code-11", "variant": 1, "text": "Explain the role of a constructor when creating an object."}
+{"id": 24, "concept": "code", "pair_id": "code-12", "variant": 0, "text": "Give a regular expression that matches a basic email-like string."}
+{"id": 25, "concept": "code", "pair_id": "code-12", "variant": 1, "text": "Show a regex pattern for a simple email address format."}
+{"id": 26, "concept": "code", "pair_id": "code-13", "variant": 0, "text": "Why is time complexity important when comparing algorithms?"}
+{"id": 27, "concept": "code", "pair_id": "code-13", "variant": 1, "text": "Explain why Big-O runtime matters in algorithm analysis."}
+{"id": 28, "concept": "code", "pair_id": "code-14", "variant": 0, "text": "How do unit tests help a codebase?"}
+{"id": 29, "concept": "code", "pair_id": "code-14", "variant": 1, "text": "Describe the purpose of automated unit testing in software."}
+{"id": 30, "concept": "code", "pair_id": "code-15", "variant": 0, "text": "Write Python that sorts a list of dictionaries by an age key."}
+{"id": 31, "concept": "code", "pair_id": "code-15", "variant": 1, "text": "Show how to order Python dictionaries in a list according to their age field."}
+{"id": 32, "concept": "mathematics", "pair_id": "mathematics-00", "variant": 0, "text": "Find the derivative of x cubed plus two x."}
+{"id": 33, "concept": "mathematics", "pair_id": "mathematics-00", "variant": 1, "text": "Differentiate the function x^3 + 2x."}
+{"id": 34, "concept": "mathematics", "pair_id": "mathematics-01", "variant": 0, "text": "Solve the equation 3x + 5 = 20."}
+{"id": 35, "concept": "mathematics", "pair_id": "mathematics-01", "variant": 1, "text": "Find x when three x plus five equals twenty."}
+{"id": 36, "concept": "mathematics", "pair_id": "mathematics-02", "variant": 0, "text": "What is the integral of cosine x?"}
+{"id": 37, "concept": "mathematics", "pair_id": "mathematics-02", "variant": 1, "text": "Compute an antiderivative of cos(x)."}
+{"id": 38, "concept": "mathematics", "pair_id": "mathematics-03", "variant": 0, "text": "Factor the polynomial x squared minus nine."}
+{"id": 39, "concept": "mathematics", "pair_id": "mathematics-03", "variant": 1, "text": "Rewrite x^2 - 9 as a product of factors."}
+{"id": 40, "concept": "mathematics", "pair_id": "mathematics-04", "variant": 0, "text": "Calculate the mean of 4, 7, 9, and 10."}
+{"id": 41, "concept": "mathematics", "pair_id": "mathematics-04", "variant": 1, "text": "What is the arithmetic average of 4, 7, 9, 10?"}
+{"id": 42, "concept": "mathematics", "pair_id": "mathematics-05", "variant": 0, "text": "Explain the Pythagorean theorem."}
+{"id": 43, "concept": "mathematics", "pair_id": "mathematics-05", "variant": 1, "text": "State the relationship among the sides of a right triangle."}
+{"id": 44, "concept": "mathematics", "pair_id": "mathematics-06", "variant": 0, "text": "What is the determinant of a two by two matrix?"}
+{"id": 45, "concept": "mathematics", "pair_id": "mathematics-06", "variant": 1, "text": "Give the formula for the determinant of a 2x2 matrix."}
+{"id": 46, "concept": "mathematics", "pair_id": "mathematics-07", "variant": 0, "text": "Simplify two to the third power times two squared."}
+{"id": 47, "concept": "mathematics", "pair_id": "mathematics-07", "variant": 1, "text": "Reduce 2^3 multiplied by 2^2 using exponent rules."}
+{"id": 48, "concept": "mathematics", "pair_id": "mathematics-08", "variant": 0, "text": "Convert one half into a percentage."}
+{"id": 49, "concept": "mathematics", "pair_id": "mathematics-08", "variant": 1, "text": "Express 1/2 as a percent."}
+{"id": 50, "concept": "mathematics", "pair_id": "mathematics-09", "variant": 0, "text": "What is the probability of heads on a fair coin?"}
+{"id": 51, "concept": "mathematics", "pair_id": "mathematics-09", "variant": 1, "text": "For a fair coin, calculate the chance of flipping heads."}
+{"id": 52, "concept": "mathematics", "pair_id": "mathematics-10", "variant": 0, "text": "Solve x squared equals sixteen."}
+{"id": 53, "concept": "mathematics", "pair_id": "mathematics-10", "variant": 1, "text": "Find the real values of x satisfying x^2 = 16."}
+{"id": 54, "concept": "mathematics", "pair_id": "mathematics-11", "variant": 0, "text": "What is the slope between points (1,2) and (3,6)?"}
+{"id": 55, "concept": "mathematics", "pair_id": "mathematics-11", "variant": 1, "text": "Calculate the gradient of the line through (1,2) and (3,6)."}
+{"id": 56, "concept": "mathematics", "pair_id": "mathematics-12", "variant": 0, "text": "Explain what a prime number is."}
+{"id": 57, "concept": "mathematics", "pair_id": "mathematics-12", "variant": 1, "text": "Define a prime integer."}
+{"id": 58, "concept": "mathematics", "pair_id": "mathematics-13", "variant": 0, "text": "Compute the dot product of vectors (1,2) and (3,4)."}
+{"id": 59, "concept": "mathematics", "pair_id": "mathematics-13", "variant": 1, "text": "Find (1,2) · (3,4)."}
+{"id": 60, "concept": "mathematics", "pair_id": "mathematics-14", "variant": 0, "text": "What is log base ten of one thousand?"}
+{"id": 61, "concept": "mathematics", "pair_id": "mathematics-14", "variant": 1, "text": "Evaluate log_10(1000)."}
+{"id": 62, "concept": "mathematics", "pair_id": "mathematics-15", "variant": 0, "text": "A circle has radius three. What is its area?"}
+{"id": 63, "concept": "mathematics", "pair_id": "mathematics-15", "variant": 1, "text": "Calculate the area of a circle whose radius is 3."}
+{"id": 64, "concept": "positive_sentiment", "pair_id": "positive_sentiment-00", "variant": 0, "text": "The film was delightful, clever, and beautifully acted."}
+{"id": 65, "concept": "positive_sentiment", "pair_id": "positive_sentiment-00", "variant": 1, "text": "I found the movie charming, smart, and wonderfully performed."}
+{"id": 66, "concept": "positive_sentiment", "pair_id": "positive_sentiment-01", "variant": 0, "text": "This restaurant served an excellent meal and the staff were kind."}
+{"id": 67, "concept": "positive_sentiment", "pair_id": "positive_sentiment-01", "variant": 1, "text": "The food was fantastic and the service team was genuinely friendly."}
+{"id": 68, "concept": "positive_sentiment", "pair_id": "positive_sentiment-02", "variant": 0, "text": "I am very pleased with how reliable this laptop has been."}
+{"id": 69, "concept": "positive_sentiment", "pair_id": "positive_sentiment-02", "variant": 1, "text": "This laptop has worked dependably and I am extremely satisfied with it."}
+{"id": 70, "concept": "positive_sentiment", "pair_id": "positive_sentiment-03", "variant": 0, "text": "The concert was energetic and unforgettable."}
+{"id": 71, "concept": "positive_sentiment", "pair_id": "positive_sentiment-03", "variant": 1, "text": "I had an amazing time at the lively, memorable concert."}
+{"id": 72, "concept": "positive_sentiment", "pair_id": "positive_sentiment-04", "variant": 0, "text": "Her explanation was clear and genuinely helpful."}
+{"id": 73, "concept": "positive_sentiment", "pair_id": "positive_sentiment-04", "variant": 1, "text": "She explained the topic in a useful and easy-to-understand way."}
+{"id": 74, "concept": "positive_sentiment", "pair_id": "positive_sentiment-05", "variant": 0, "text": "The hotel room was spotless and comfortable."}
+{"id": 75, "concept": "positive_sentiment", "pair_id": "positive_sentiment-05", "variant": 1, "text": "Our room was exceptionally clean and pleasant to stay in."}
+{"id": 76, "concept": "positive_sentiment", "pair_id": "positive_sentiment-06", "variant": 0, "text": "I loved the book from beginning to end."}
+{"id": 77, "concept": "positive_sentiment", "pair_id": "positive_sentiment-06", "variant": 1, "text": "The novel kept me delighted all the way through."}
+{"id": 78, "concept": "positive_sentiment", "pair_id": "positive_sentiment-07", "variant": 0, "text": "The new update makes the app much easier to use."}
+{"id": 79, "concept": "positive_sentiment", "pair_id": "positive_sentiment-07", "variant": 1, "text": "After the update, the application feels significantly more convenient."}
+{"id": 80, "concept": "positive_sentiment", "pair_id": "positive_sentiment-08", "variant": 0, "text": "Their customer support solved my problem quickly."}
+{"id": 81, "concept": "positive_sentiment", "pair_id": "positive_sentiment-08", "variant": 1, "text": "Support handled the issue fast and left me very happy."}
+{"id": 82, "concept": "positive_sentiment", "pair_id": "positive_sentiment-09", "variant": 0, "text": "The hike had spectacular views and perfect weather."}
+{"id": 83, "concept": "positive_sentiment", "pair_id": "positive_sentiment-09", "variant": 1, "text": "We enjoyed gorgeous scenery and wonderful conditions on the hike."}
+{"id": 84, "concept": "positive_sentiment", "pair_id": "positive_sentiment-10", "variant": 0, "text": "The presentation was engaging and well organized."}
+{"id": 85, "concept": "positive_sentiment", "pair_id": "positive_sentiment-10", "variant": 1, "text": "I enjoyed the talk because it was compelling and structured clearly."}
+{"id": 86, "concept": "positive_sentiment", "pair_id": "positive_sentiment-11", "variant": 0, "text": "This camera takes sharp photos and feels great to use."}
+{"id": 87, "concept": "positive_sentiment", "pair_id": "positive_sentiment-11", "variant": 1, "text": "The camera produces crisp images and has a satisfying design."}
+{"id": 88, "concept": "positive_sentiment", "pair_id": "positive_sentiment-12", "variant": 0, "text": "The workshop exceeded my expectations."}
+{"id": 89, "concept": "positive_sentiment", "pair_id": "positive_sentiment-12", "variant": 1, "text": "I was impressed because the workshop was even better than I expected."}
+{"id": 90, "concept": "positive_sentiment", "pair_id": "positive_sentiment-13", "variant": 0, "text": "Dinner turned out wonderfully and everyone enjoyed it."}
+{"id": 91, "concept": "positive_sentiment", "pair_id": "positive_sentiment-13", "variant": 1, "text": "The evening meal was a success and all of us had a great time."}
+{"id": 92, "concept": "positive_sentiment", "pair_id": "positive_sentiment-14", "variant": 0, "text": "The museum exhibition was fascinating."}
+{"id": 93, "concept": "positive_sentiment", "pair_id": "positive_sentiment-14", "variant": 1, "text": "I thought the exhibition was deeply interesting and rewarding."}
+{"id": 94, "concept": "positive_sentiment", "pair_id": "positive_sentiment-15", "variant": 0, "text": "The train journey was smooth and relaxing."}
+{"id": 95, "concept": "positive_sentiment", "pair_id": "positive_sentiment-15", "variant": 1, "text": "The trip by train felt easy, calm, and comfortable."}
+{"id": 96, "concept": "negative_sentiment", "pair_id": "negative_sentiment-00", "variant": 0, "text": "The film was tedious, confusing, and badly acted."}
+{"id": 97, "concept": "negative_sentiment", "pair_id": "negative_sentiment-00", "variant": 1, "text": "I found the movie boring, incoherent, and poorly performed."}
+{"id": 98, "concept": "negative_sentiment", "pair_id": "negative_sentiment-01", "variant": 0, "text": "This restaurant served cold food and the staff were rude."}
+{"id": 99, "concept": "negative_sentiment", "pair_id": "negative_sentiment-01", "variant": 1, "text": "The meal arrived cold and the service team behaved unpleasantly."}
+{"id": 100, "concept": "negative_sentiment", "pair_id": "negative_sentiment-02", "variant": 0, "text": "I am disappointed by how unreliable this laptop has been."}
+{"id": 101, "concept": "negative_sentiment", "pair_id": "negative_sentiment-02", "variant": 1, "text": "This laptop keeps failing and I am extremely dissatisfied with it."}
+{"id": 102, "concept": "negative_sentiment", "pair_id": "negative_sentiment-03", "variant": 0, "text": "The concert was chaotic and forgettable."}
+{"id": 103, "concept": "negative_sentiment", "pair_id": "negative_sentiment-03", "variant": 1, "text": "I had a miserable time at the disorganized, dull concert."}
+{"id": 104, "concept": "negative_sentiment", "pair_id": "negative_sentiment-04", "variant": 0, "text": "Her explanation was unclear and unhelpful."}
+{"id": 105, "concept": "negative_sentiment", "pair_id": "negative_sentiment-04", "variant": 1, "text": "She explained the topic in a confusing way that did not help me."}
+{"id": 106, "concept": "negative_sentiment", "pair_id": "negative_sentiment-05", "variant": 0, "text": "The hotel room was dirty and uncomfortable."}
+{"id": 107, "concept": "negative_sentiment", "pair_id": "negative_sentiment-05", "variant": 1, "text": "Our room was unpleasant, unclean, and difficult to relax in."}
+{"id": 108, "concept": "negative_sentiment", "pair_id": "negative_sentiment-06", "variant": 0, "text": "I regretted reading the book."}
+{"id": 109, "concept": "negative_sentiment", "pair_id": "negative_sentiment-06", "variant": 1, "text": "The novel was a frustrating waste of my time."}
+{"id": 110, "concept": "negative_sentiment", "pair_id": "negative_sentiment-07", "variant": 0, "text": "The new update makes the app harder to use."}
+{"id": 111, "concept": "negative_sentiment", "pair_id": "negative_sentiment-07", "variant": 1, "text": "After the update, the application feels significantly more awkward."}
+{"id": 112, "concept": "negative_sentiment", "pair_id": "negative_sentiment-08", "variant": 0, "text": "Their customer support ignored my problem."}
+{"id": 113, "concept": "negative_sentiment", "pair_id": "negative_sentiment-08", "variant": 1, "text": "Support failed to resolve the issue and left me angry."}
+{"id": 114, "concept": "negative_sentiment", "pair_id": "negative_sentiment-09", "variant": 0, "text": "The hike had awful weather and disappointing views."}
+{"id": 115, "concept": "negative_sentiment", "pair_id": "negative_sentiment-09", "variant": 1, "text": "We dealt with terrible conditions and underwhelming scenery on the hike."}
+{"id": 116, "concept": "negative_sentiment", "pair_id": "negative_sentiment-10", "variant": 0, "text": "The presentation was dull and poorly organized."}
+{"id": 117, "concept": "negative_sentiment", "pair_id": "negative_sentiment-10", "variant": 1, "text": "I disliked the talk because it was tedious and structured badly."}
+{"id": 118, "concept": "negative_sentiment", "pair_id": "negative_sentiment-11", "variant": 0, "text": "This camera takes blurry photos and feels cheap."}
+{"id": 119, "concept": "negative_sentiment", "pair_id": "negative_sentiment-11", "variant": 1, "text": "The camera produces soft images and has a flimsy design."}
+{"id": 120, "concept": "negative_sentiment", "pair_id": "negative_sentiment-12", "variant": 0, "text": "The workshop fell far below my expectations."}
+{"id": 121, "concept": "negative_sentiment", "pair_id": "negative_sentiment-12", "variant": 1, "text": "I was disappointed because the workshop was much worse than I expected."}
+{"id": 122, "concept": "negative_sentiment", "pair_id": "negative_sentiment-13", "variant": 0, "text": "Dinner went badly and nobody enjoyed it."}
+{"id": 123, "concept": "negative_sentiment", "pair_id": "negative_sentiment-13", "variant": 1, "text": "The evening meal was a failure and all of us had a poor time."}
+{"id": 124, "concept": "negative_sentiment", "pair_id": "negative_sentiment-14", "variant": 0, "text": "The museum exhibition was painfully boring."}
+{"id": 125, "concept": "negative_sentiment", "pair_id": "negative_sentiment-14", "variant": 1, "text": "I thought the exhibition was dull and unrewarding."}
+{"id": 126, "concept": "negative_sentiment", "pair_id": "negative_sentiment-15", "variant": 0, "text": "The train journey was stressful and uncomfortable."}
+{"id": 127, "concept": "negative_sentiment", "pair_id": "negative_sentiment-15", "variant": 1, "text": "The trip by train felt frustrating, noisy, and unpleasant."}
+{"id": 128, "concept": "german_language", "pair_id": "german_language-00", "variant": 0, "text": "Guten Tag, wie geht es Ihnen heute?"}
+{"id": 129, "concept": "german_language", "pair_id": "german_language-00", "variant": 1, "text": "Hallo, wie geht es dir heute?"}
+{"id": 130, "concept": "german_language", "pair_id": "german_language-01", "variant": 0, "text": "Ich möchte einen Tisch für zwei Personen reservieren."}
+{"id": 131, "concept": "german_language", "pair_id": "german_language-01", "variant": 1, "text": "Kann ich bitte einen Tisch für zwei reservieren?"}
+{"id": 132, "concept": "german_language", "pair_id": "german_language-02", "variant": 0, "text": "Die Bibliothek schließt um achtzehn Uhr."}
+{"id": 133, "concept": "german_language", "pair_id": "german_language-02", "variant": 1, "text": "Die Bibliothek ist bis achtzehn Uhr geöffnet."}
+{"id": 134, "concept": "german_language", "pair_id": "german_language-03", "variant": 0, "text": "Dieses Buch erzählt eine sehr interessante Geschichte."}
+{"id": 135, "concept": "german_language", "pair_id": "german_language-03", "variant": 1, "text": "Die Geschichte in diesem Buch ist wirklich interessant."}
+{"id": 136, "concept": "german_language", "pair_id": "german_language-04", "variant": 0, "text": "Wir fahren morgen früh mit dem Zug."}
+{"id": 137, "concept": "german_language", "pair_id": "german_language-04", "variant": 1, "text": "Morgen früh werden wir mit dem Zug reisen."}
+{"id": 138, "concept": "german_language", "pair_id": "german_language-05", "variant": 0, "text": "Können Sie mir den Weg zum Bahnhof zeigen?"}
+{"id": 139, "concept": "german_language", "pair_id": "german_language-05", "variant": 1, "text": "Wie komme ich zum Bahnhof?"}
+{"id": 140, "concept": "german_language", "pair_id": "german_language-06", "variant": 0, "text": "Ich lerne gern neue Sprachen."}
+{"id": 141, "concept": "german_language", "pair_id": "german_language-06", "variant": 1, "text": "Neue Sprachen zu lernen macht mir viel Spaß."}
+{"id": 142, "concept": "german_language", "pair_id": "german_language-07", "variant": 0, "text": "Das Wetter am Meer ist wunderschön."}
+{"id": 143, "concept": "german_language", "pair_id": "german_language-07", "variant": 1, "text": "Am Meer ist das Wetter heute sehr schön."}
+{"id": 144, "concept": "german_language", "pair_id": "german_language-08", "variant": 0, "text": "Sie bereitet das Abendessen in der Küche zu."}
+{"id": 145, "concept": "german_language", "pair_id": "german_language-08", "variant": 1, "text": "In der Küche kocht sie gerade das Abendessen."}
+{"id": 146, "concept": "german_language", "pair_id": "german_language-09", "variant": 0, "text": "Wir haben am Wochenende ein Museum besucht."}
+{"id": 147, "concept": "german_language", "pair_id": "german_language-09", "variant": 1, "text": "Am Wochenende waren wir in einem Museum."}
+{"id": 148, "concept": "german_language", "pair_id": "german_language-10", "variant": 0, "text": "Die Besprechung beginnt genau um neun Uhr."}
+{"id": 149, "concept": "german_language", "pair_id": "german_language-10", "variant": 1, "text": "Das Treffen fängt pünktlich um neun Uhr an."}
+{"id": 150, "concept": "german_language", "pair_id": "german_language-11", "variant": 0, "text": "Mein Computer funktioniert nicht mehr richtig."}
+{"id": 151, "concept": "german_language", "pair_id": "german_language-11", "variant": 1, "text": "Mit meinem Computer stimmt etwas nicht; er läuft nicht richtig."}
+{"id": 152, "concept": "german_language", "pair_id": "german_language-12", "variant": 0, "text": "Diese Stadt hat viele historische Gebäude."}
+{"id": 153, "concept": "german_language", "pair_id": "german_language-12", "variant": 1, "text": "In dieser Stadt gibt es zahlreiche historische Bauwerke."}
+{"id": 154, "concept": "german_language", "pair_id": "german_language-13", "variant": 0, "text": "Wir müssen Brot und Gemüse kaufen."}
+{"id": 155, "concept": "german_language", "pair_id": "german_language-13", "variant": 1, "text": "Wir sollten noch Brot sowie Gemüse einkaufen."}
+{"id": 156, "concept": "german_language", "pair_id": "german_language-14", "variant": 0, "text": "Ich suche eine Wohnung in der Nähe der Universität."}
+{"id": 157, "concept": "german_language", "pair_id": "german_language-14", "variant": 1, "text": "Ich möchte eine Unterkunft nahe der Universität finden."}
+{"id": 158, "concept": "german_language", "pair_id": "german_language-15", "variant": 0, "text": "Vielen Dank für Ihre Hilfe."}
+{"id": 159, "concept": "german_language", "pair_id": "german_language-15", "variant": 1, "text": "Ich danke Ihnen herzlich für Ihre Unterstützung."}
+{"id": 160, "concept": "factual_entities", "pair_id": "factual_entities-00", "variant": 0, "text": "Tell me about Marie Curie and her scientific work."}
+{"id": 161, "concept": "factual_entities", "pair_id": "factual_entities-00", "variant": 1, "text": "Summarize the scientific contributions of Marie Curie."}
+{"id": 162, "concept": "factual_entities", "pair_id": "factual_entities-01", "variant": 0, "text": "What is notable about the city of Kyoto?"}
+{"id": 163, "concept": "factual_entities", "pair_id": "factual_entities-01", "variant": 1, "text": "Give a short factual overview of Kyoto."}
+{"id": 164, "concept": "factual_entities", "pair_id": "factual_entities-02", "variant": 0, "text": "Explain the role of the Nile in ancient Egypt."}
+{"id": 165, "concept": "factual_entities", "pair_id": "factual_entities-02", "variant": 1, "text": "Describe why the Nile mattered to ancient Egyptian civilization."}
+{"id": 166, "concept": "factual_entities", "pair_id": "factual_entities-03", "variant": 0, "text": "Who was Ada Lovelace?"}
+{"id": 167, "concept": "factual_entities", "pair_id": "factual_entities-03", "variant": 1, "text": "Provide a concise factual description of Ada Lovelace."}
+{"id": 168, "concept": "factual_entities", "pair_id": "factual_entities-04", "variant": 0, "text": "What is Mount Everest?"}
+{"id": 169, "concept": "factual_entities", "pair_id": "factual_entities-04", "variant": 1, "text": "Give basic factual information about Mount Everest."}
+{"id": 170, "concept": "factual_entities", "pair_id": "factual_entities-05", "variant": 0, "text": "Describe the planet Saturn."}
+{"id": 171, "concept": "factual_entities", "pair_id": "factual_entities-05", "variant": 1, "text": "Provide several factual details about Saturn."}
+{"id": 172, "concept": "factual_entities", "pair_id": "factual_entities-06", "variant": 0, "text": "What is the Great Barrier Reef?"}
+{"id": 173, "concept": "factual_entities", "pair_id": "factual_entities-06", "variant": 1, "text": "Give an overview of the Great Barrier Reef."}
+{"id": 174, "concept": "factual_entities", "pair_id": "factual_entities-07", "variant": 0, "text": "Tell me about Ludwig van Beethoven."}
+{"id": 175, "concept": "factual_entities", "pair_id": "factual_entities-07", "variant": 1, "text": "Summarize who Beethoven was and why he is remembered."}
+{"id": 176, "concept": "factual_entities", "pair_id": "factual_entities-08", "variant": 0, "text": "What is the Amazon River?"}
+{"id": 177, "concept": "factual_entities", "pair_id": "factual_entities-08", "variant": 1, "text": "Provide factual information about the Amazon River."}
+{"id": 178, "concept": "factual_entities", "pair_id": "factual_entities-09", "variant": 0, "text": "Explain what the Rosetta Stone is."}
+{"id": 179, "concept": "factual_entities", "pair_id": "factual_entities-09", "variant": 1, "text": "Describe the Rosetta Stone and its historical importance."}
+{"id": 180, "concept": "factual_entities", "pair_id": "factual_entities-10", "variant": 0, "text": "Tell me about the element gold."}
+{"id": 181, "concept": "factual_entities", "pair_id": "factual_entities-10", "variant": 1, "text": "Give a factual overview of the chemical element gold."}
+{"id": 182, "concept": "factual_entities", "pair_id": "factual_entities-11", "variant": 0, "text": "What was the Renaissance?"}
+{"id": 183, "concept": "factual_entities", "pair_id": "factual_entities-11", "variant": 1, "text": "Summarize the historical period known as the Renaissance."}
+{"id": 184, "concept": "factual_entities", "pair_id": "factual_entities-12", "variant": 0, "text": "Describe the city of Hamburg."}
+{"id": 185, "concept": "factual_entities", "pair_id": "factual_entities-12", "variant": 1, "text": "Give several basic facts about Hamburg, Germany."}
+{"id": 186, "concept": "factual_entities", "pair_id": "factual_entities-13", "variant": 0, "text": "Who was Alan Turing?"}
+{"id": 187, "concept": "factual_entities", "pair_id": "factual_entities-13", "variant": 1, "text": "Provide a factual summary of Alan Turing’s life and work."}
+{"id": 188, "concept": "factual_entities", "pair_id": "factual_entities-14", "variant": 0, "text": "What is the Pacific Ocean?"}
+{"id": 189, "concept": "factual_entities", "pair_id": "factual_entities-14", "variant": 1, "text": "Give a concise factual description of the Pacific Ocean."}
+{"id": 190, "concept": "factual_entities", "pair_id": "factual_entities-15", "variant": 0, "text": "Explain what DNA is."}
+{"id": 191, "concept": "factual_entities", "pair_id": "factual_entities-15", "variant": 1, "text": "Provide a factual description of DNA and its biological role."}
+{"id": 192, "concept": "uncertainty", "pair_id": "uncertainty-00", "variant": 0, "text": "I have not given enough information to know which box contains the key."}
+{"id": 193, "concept": "uncertainty", "pair_id": "uncertainty-00", "variant": 1, "text": "From the details provided, the location of the key cannot be determined."}
+{"id": 194, "concept": "uncertainty", "pair_id": "uncertainty-01", "variant": 0, "text": "The evidence is incomplete, so the cause remains uncertain."}
+{"id": 195, "concept": "uncertainty", "pair_id": "uncertainty-01", "variant": 1, "text": "There is insufficient evidence to identify the cause with confidence."}
+{"id": 196, "concept": "uncertainty", "pair_id": "uncertainty-02", "variant": 0, "text": "I do not know which route they chose because the text never says."}
+{"id": 197, "concept": "uncertainty", "pair_id": "uncertainty-02", "variant": 1, "text": "The passage does not specify the route, so the answer is unknown."}
+{"id": 198, "concept": "uncertainty", "pair_id": "uncertainty-03", "variant": 0, "text": "Without the missing measurement, the result cannot be calculated."}
+{"id": 199, "concept": "uncertainty", "pair_id": "uncertainty-03", "variant": 1, "text": "The calculation is underdetermined because a required value is absent."}
+{"id": 200, "concept": "uncertainty", "pair_id": "uncertainty-04", "variant": 0, "text": "The source does not state when the event happened."}
+{"id": 201, "concept": "uncertainty", "pair_id": "uncertainty-04", "variant": 1, "text": "The event date is not provided by the available source."}
+{"id": 202, "concept": "uncertainty", "pair_id": "uncertainty-05", "variant": 0, "text": "Several explanations fit the observations, so no single one is established."}
+{"id": 203, "concept": "uncertainty", "pair_id": "uncertainty-05", "variant": 1, "text": "The observations support multiple possibilities and do not settle on one explanation."}
+{"id": 204, "concept": "uncertainty", "pair_id": "uncertainty-06", "variant": 0, "text": "There is not enough context to identify who the pronoun refers to."}
+{"id": 205, "concept": "uncertainty", "pair_id": "uncertainty-06", "variant": 1, "text": "The pronoun’s referent is ambiguous given the limited context."}
+{"id": 206, "concept": "uncertainty", "pair_id": "uncertainty-07", "variant": 0, "text": "The sample is too small to draw a reliable conclusion."}
+{"id": 207, "concept": "uncertainty", "pair_id": "uncertainty-07", "variant": 1, "text": "A confident conclusion would be unjustified because the sample size is inadequate."}
+{"id": 208, "concept": "uncertainty", "pair_id": "uncertainty-08", "variant": 0, "text": "I cannot verify that claim from the information available."}
+{"id": 209, "concept": "uncertainty", "pair_id": "uncertainty-08", "variant": 1, "text": "The available information is insufficient to confirm the claim."}
+{"id": 210, "concept": "uncertainty", "pair_id": "uncertainty-09", "variant": 0, "text": "The instructions omit the final step, so the intended outcome is unclear."}
+{"id": 211, "concept": "uncertainty", "pair_id": "uncertainty-09", "variant": 1, "text": "Because the last instruction is missing, the desired result cannot be known."}
+{"id": 212, "concept": "uncertainty", "pair_id": "uncertainty-10", "variant": 0, "text": "We have two plausible answers and no evidence that distinguishes them."}
+{"id": 213, "concept": "uncertainty", "pair_id": "uncertainty-10", "variant": 1, "text": "Both answers remain possible because there is no discriminating evidence."}
+{"id": 214, "concept": "uncertainty", "pair_id": "uncertainty-11", "variant": 0, "text": "The report gives a range but not an exact value."}
+{"id": 215, "concept": "uncertainty", "pair_id": "uncertainty-11", "variant": 1, "text": "Only an interval is reported, so the precise value is unspecified."}
+{"id": 216, "concept": "uncertainty", "pair_id": "uncertainty-12", "variant": 0, "text": "The image is too blurry to read the number confidently."}
+{"id": 217, "concept": "uncertainty", "pair_id": "uncertainty-12", "variant": 1, "text": "The number cannot be identified reliably because the image lacks clarity."}
+{"id": 218, "concept": "uncertainty", "pair_id": "uncertainty-13", "variant": 0, "text": "No forecast was provided, so tomorrow’s value is unknown."}
+{"id": 219, "concept": "uncertainty", "pair_id": "uncertainty-13", "variant": 1, "text": "The future value cannot be stated because there is no forecast information."}
+{"id": 220, "concept": "uncertainty", "pair_id": "uncertainty-14", "variant": 0, "text": "The experiment was not repeated, so the finding remains tentative."}
+{"id": 221, "concept": "uncertainty", "pair_id": "uncertainty-14", "variant": 1, "text": "Without replication, the result should be treated as uncertain."}
+{"id": 222, "concept": "uncertainty", "pair_id": "uncertainty-15", "variant": 0, "text": "The text names several candidates but never identifies the winner."}
+{"id": 223, "concept": "uncertainty", "pair_id": "uncertainty-15", "variant": 1, "text": "A winner cannot be determined because the passage lists candidates without a result."}

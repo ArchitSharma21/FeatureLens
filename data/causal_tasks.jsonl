@@ -1,0 +1,28 @@
+{"id": 0, "concept": "positive_sentiment", "prompt": "Sentiment: The meal was wonderful and the staff were kind. Label:", "target": " positive"}
+{"id": 1, "concept": "positive_sentiment", "prompt": "Sentiment: I loved the thoughtful, beautifully written novel. Label:", "target": " positive"}
+{"id": 2, "concept": "positive_sentiment", "prompt": "Sentiment: The service was fast and extremely helpful. Label:", "target": " positive"}
+{"id": 3, "concept": "positive_sentiment", "prompt": "Sentiment: The journey was comfortable and enjoyable. Label:", "target": " positive"}
+{"id": 4, "concept": "negative_sentiment", "prompt": "Sentiment: The meal was awful and the staff were rude. Label:", "target": " negative"}
+{"id": 5, "concept": "negative_sentiment", "prompt": "Sentiment: I hated the tedious, badly written novel. Label:", "target": " negative"}
+{"id": 6, "concept": "negative_sentiment", "prompt": "Sentiment: The service was slow and completely unhelpful. Label:", "target": " negative"}
+{"id": 7, "concept": "negative_sentiment", "prompt": "Sentiment: The journey was stressful and unpleasant. Label:", "target": " negative"}
+{"id": 8, "concept": "mathematics", "prompt": "2 + 3 =", "target": " 5"}
+{"id": 9, "concept": "mathematics", "prompt": "7 - 4 =", "target": " 3"}
+{"id": 10, "concept": "mathematics", "prompt": "6 * 2 =", "target": " 12"}
+{"id": 11, "concept": "mathematics", "prompt": "The square root of 81 is", "target": " 9"}
+{"id": 12, "concept": "code", "prompt": "Python function declaration keyword:", "target": " def"}
+{"id": 13, "concept": "code", "prompt": "In Python, an exception handler begins with the keyword", "target": " except"}
+{"id": 14, "concept": "code", "prompt": "SQL keyword used to retrieve rows:", "target": " SELECT"}
+{"id": 15, "concept": "code", "prompt": "A Python conditional branch commonly starts with", "target": " if"}
+{"id": 16, "concept": "german_language", "prompt": "Translate 'hello' into German:", "target": " hallo"}
+{"id": 17, "concept": "german_language", "prompt": "Translate 'thank you' into German:", "target": " danke"}
+{"id": 18, "concept": "german_language", "prompt": "Translate 'yes' into German:", "target": " ja"}
+{"id": 19, "concept": "german_language", "prompt": "Translate 'good evening' into German:", "target": " guten Abend"}
+{"id": 20, "concept": "factual_entities", "prompt": "The scientist associated with radium research, Marie", "target": " Curie"}
+{"id": 21, "concept": "factual_entities", "prompt": "The composer of the Fifth Symphony, Ludwig van", "target": " Beethoven"}
+{"id": 22, "concept": "factual_entities", "prompt": "The computer scientist known for the Turing machine, Alan", "target": " Turing"}
+{"id": 23, "concept": "factual_entities", "prompt": "The Japanese city famous for many historic temples,", "target": " Kyoto"}
+{"id": 24, "concept": "uncertainty", "prompt": "The evidence is insufficient. The answer is", "target": " unknown"}
+{"id": 25, "concept": "uncertainty", "prompt": "The passage never states the value, so it is", "target": " unknown"}
+{"id": 26, "concept": "uncertainty", "prompt": "There is not enough information to determine the result. It remains", "target": " uncertain"}
+{"id": 27, "concept": "uncertainty", "prompt": "No reliable conclusion can be drawn; the outcome is", "target": " unclear"}
